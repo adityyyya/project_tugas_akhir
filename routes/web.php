@@ -15,10 +15,14 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/home', [HomeController::class, 'index']);
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+

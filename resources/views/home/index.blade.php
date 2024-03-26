@@ -20,6 +20,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
 
 
 </head>
@@ -29,7 +31,11 @@
     </head>
 
 <body id="page-top">
-
+    @if (session()->has('success'))
+    <div class="alert alert-success notification show">
+        {{ session('success') }}
+    </div>
+@endif
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -149,10 +155,8 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -343,11 +347,14 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                <form action="/logout" method="POST" class="dropdown-item">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link" style="color: inherit; text-decoration: none;">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </button>
+                                </form>
+                                
                             </div>
                         </li>
 
@@ -411,6 +418,14 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // Hide success message after 5 seconds
+            setTimeout(function() {
+                $(".alert-success").alert('close');
+            }, 5000); // Adjust the time (in milliseconds) as needed
+        });
+    </script>
 
 </body>
 

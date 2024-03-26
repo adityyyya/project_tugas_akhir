@@ -10,48 +10,104 @@
   <meta name="author" content="">
 
   <title>Login</title>
-
+  
   <!-- Custom fonts for this template-->
   <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+  <style>
+    body {
+        background-image: url('/images/banjarmasin.jpg'); 
+        background-size: cover;
+        background-position: center;
+    }
+</style>
 </head>
 
-
-<body class="bg-gradient-primary d-flex align-items-center justify-content-center">
+<body>
   
   <div class="container">
 
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
-      <div class="col-lg-7">
+      <div class="col-lg-6">
 
         <div class="card o-hidden border-10 shadow-lg my-5">
-          <div class="card-body p-5">
+          <div class="card-body p-3">
             <!-- Nested Row within Card Body -->
-              <div class="col-lg">
-                <div class="p-5">
+            <div class="col-lg">
+              <div class="p-3">
                   <div class="text-center">
-                  <img src="/images/logobanjar.png" width="150px" height="150px" style="margin-bottom: 30px;">
-                    <h1 class="h4 text-gray-900 mb-4" style="font-size: 20px;">SISTEM INFORMASI ARSIP KELURAHAN ALALAK TENGAH</h1>
+                            @if (session()->has('LoginError'))
+                            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                                {{ session('LoginError') }}
+                                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+                            </div>
+                        @endif
+                                                           
+                      <img src="/images/logobanjar.png" width="150px" height="150px" style="margin-bottom: 30px;">
+                      <h1 class="h4 text-gray-900 mb-4" style="font-size: 24px;">SISTEM INFORMASI ARSIP KELURAHAN ALALAK TENGAH</h1>
+                      <p class="text-gray-700 mb-4">Login ke akun anda sekarang</p>
                   </div>
-                  <form id="loginForm" method="POST" action="/login">
+                  <form id="loginForm" method="POST" action="/login" onsubmit="return validateForm()">
+                    @csrf
                     <div class="form-group">
-                      <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                        <label for="email">Email Address</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input name="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror"
+                            id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." autofocus required
+                            value="{{ old('email') }}">
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                          </div>
                     </div>
                     <div class="form-group">
-                      <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                    </div>
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" 
+                            placeholder="Password" required>
+                        </div>
+                    </div> 
                     <div class="form-group">
-                      <span id="error-msg" style="color: red;"></span>
+                        <span id="error-msg" style="color: red;"></span>
                     </div>
-                    <button type="button" onclick="validateForm()" class="btn btn-primary btn-block btn-user">Login</button>
-                  </form>
-                  <hr>
+                    <button type="submit" class="btn btn-primary btn-block btn-user">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>                                                   
+              </div>
+              <script>
+                function validateForm() {
+                    var email = document.getElementById("exampleInputEmail").value;
+                    var password = document.getElementById("exampleInputPassword").value;
+                    var errorMsg = document.getElementById("error-msg");
+            
+                    if (email.trim() === '') {
+                        errorMsg.textContent = 'Email harus diisi.';
+                        return false;
+                    }
+            
+                    if (password.trim() === '') {
+                        errorMsg.textContent = 'Password harus diisi.';
+                        return false;
+                    }
+            
+                    // Jika email dan password terisi, kosongkan pesan kesalahan
+                    errorMsg.textContent = '';
+                    return true; // Mengembalikan nilai true jika validasi berhasil
+                }
+            </script>                      
+          </div>          
                 </div>
               </div>
             </div>
@@ -73,42 +129,6 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-
-  <script>
-  function validateForm() {
-    var email = document.getElementById("exampleInputEmail").value;
-    var password = document.getElementById("exampleInputPassword").value;
-    var errorMsg = document.getElementById("error-msg");
-
-    // Example validation, you should replace this with your actual validation logic
-    if (email === "" || password === "") {
-      errorMsg.innerText = "Email and password are required.";
-    } else {
-      // If validation succeeds, send login request via AJAX
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "/login", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            // If login successful, redirect to dashboard
-            var response = JSON.parse(xhr.responseText);
-            if (response.success) {
-              window.location.href = "/dashboard"; // Redirect to dashboard or any other page
-            } else {
-              errorMsg.innerText = "Invalid email or password.";
-            }
-          } else {
-            // Handle other status codes, e.g., server errors
-            errorMsg.innerText = "An error occurred. Please try again later.";
-          }
-        }
-      };
-      xhr.send(JSON.stringify({ email: email, password: password }));
-    }
-  }
-</script>
-
 
 </body>
 
