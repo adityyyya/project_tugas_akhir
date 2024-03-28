@@ -8,6 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+
 class UserSeeder extends Seeder
 {
     /**
@@ -24,5 +25,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
             'role' => Role::ADMIN->status(),
         ]);
+        User::factory()->create([
+            'name' => 'Muhamad Aditya',
+            'email' => 'aditya@admin.com',
+            'phone' => '083144951386',
+            'password' => Hash::make('admin'),
+            'role' => Role::ADMIN->status(),
+        ]);
     }
+    
 }

@@ -18,11 +18,18 @@ use App\Http\Controllers\HomeController;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate'])->middleware('guest');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LoginController::class, 'logout']);
-
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/surat-masuk', function (\Illuminate\Http\Request $request) {
+        $nama_pengguna = $request->query('nama_pengguna');
+        return view('transaksi.surat-masuk', ['nama_pengguna' => $nama_pengguna]);
+    })->name('surat.masuk');   
+    Route::get('/surat-keluar', function (\Illuminate\Http\Request $request) {
+        $nama_pengguna = $request->query('nama_pengguna');
+        return view('transaksi.surat-keluar', ['nama_pengguna' => $nama_pengguna]);
+    })->name('surat.keluar');      
+});
