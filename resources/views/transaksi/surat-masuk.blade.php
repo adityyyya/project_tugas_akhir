@@ -10,9 +10,21 @@
   @include('home.index')
 
     <!-- Konten Surat Masuk -->
-    <div id="suratMasukContent">
-        <h1>Halaman Surat Masuk</h1>
-        <p>Ini adalah halaman surat masuk sederhana.</p>
+    <div id="suratMasukContent" class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div>
+                <div class="d-flex justify-content-between flex-column flex-sm-row">
+                    <h4 class="fw-bold py-3 mb-4">
+                        <span class="text-muted fw-light">Transaksi Surat /</span>
+                        Surat Masuk
+                    </h4>
+                    <div class="py-3">
+                        <a href="http://127.0.0.1:8000/transaction/incoming/create" class="btn btn-primary">Tambah Baru</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

@@ -32,6 +32,7 @@
               @include('home.navbar')
                 <!-- End of Topbar -->
                
+                    <!-- Other content -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
     <a class="scroll-to-top rounded" href="#page-top">

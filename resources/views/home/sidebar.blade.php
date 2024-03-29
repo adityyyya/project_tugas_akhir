@@ -2,6 +2,9 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon">
+            <img src="{{ asset('images/logobanjar.png') }}"  width="50" height="50" class="img-fluid">
+        </div>
         <div class="sidebar-brand-text mx-3">E-ARSIP</div>
     </a>
 
@@ -12,7 +15,7 @@
     <li class="nav-item">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span style="font-size: 17px;">Dashboard</span></a>
     </li>
 
     <!-- Divider -->
@@ -20,7 +23,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Silahkan Transaksi
+        MENU UTAMA
     </div>
 
     <!-- Nav Item - Transaksi Surat Collapse Menu -->
@@ -29,7 +32,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo" onclick="toggleIconDanGulir()">
             <i class="fas fa-fw fa-envelope"></i>
-            <span>Transaksi Surat</span>
+            <span style="font-size: 17px;">Transaksi Surat</span>
         </a>
         <div id="collapseTwo" class="collapse @if(Request::is('surat-masuk') || Request::is('surat-keluar')) show @endif" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -47,7 +50,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-book"></i>
-            <span>Buku Agenda</span>
+            <span style="font-size: 17px;">Buku Agenda</span>
      </a>
      <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
            data-parent="#accordionSidebar">
@@ -64,14 +67,14 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Addons
+        MENU LAINYA
     </div>
 
    <!-- Nav Item - Galeri Surat Collapse Menu -->
    <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-controls="collapsePages1">
         <i class="fas fa-fw fa-folder"></i>
-        <span>Galeri Surat</span>
+        <span style="font-size: 17px;">Galeri Surat</span>
     </a>
     <div id="collapsePages1" class="collapse" aria-labelledby="headingPages1" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
@@ -85,7 +88,7 @@
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-controls="collapsePages2">
         <i class="fas fa-fw fa-spinner"></i>
-        <span>Klasifikasi</span>
+        <span style="font-size: 17px;">Klasifikasi</span>
     </a>
     <div id="collapsePages2" class="collapse" aria-labelledby="headingPages2" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
@@ -95,19 +98,15 @@
     </div>
 </li>
 
-
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
-    </li>
-
-    <!-- Divider -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#">
+        <i class="fas fa-fw fa-spinner"></i>
+        <span style="font-size: 17px;">Kelola Pengguna</span>
+    </a>
+</li>
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler (Sidebar) -->
+    
 
 
 </ul>
