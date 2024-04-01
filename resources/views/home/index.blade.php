@@ -31,7 +31,7 @@
                 <!-- Topbar -->
               @include('home.navbar')
                 <!-- End of Topbar -->
-               
+               @yield('content')
                     <!-- Other content -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -69,8 +69,6 @@
             }, 5000); // Adjust the time (in milliseconds) as needed
         });
     </script>
-    
-
 </body>
 
 </html>

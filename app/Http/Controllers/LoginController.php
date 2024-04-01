@@ -24,12 +24,18 @@ class LoginController extends Controller
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('home')->with('success', 'Login successful!');
+    
+            // Pengecekan peran pengguna setelah berhasil login
+            if (Auth::user()->role === 'admin') {
+                // Jika admin, arahkan ke halaman dashboard
+                return redirect()->intended('dashboard')->with('success', 'Login successful!');
+            }
         }
+    
+        // Jika login gagal atau pengguna bukan admin, kembalikan pengguna ke halaman login dengan pesan kesalahan
         return back()->with('LoginError', 'Login Failed!.');
-
     }
-
+    
     public function logout(Request $request)
     {
         Auth::logout();

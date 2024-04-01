@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('dashboard') }}"">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span style="font-size: 17px;">Dashboard</span></a>
     </li>
@@ -97,15 +97,16 @@
         </div>
     </div>
 </li>
+@if(auth()->check() && auth()->user()->role === 'admin')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+            <i class="fas fa-fw fa-spinner"></i>
+            <span style="font-size: 17px;">Kelola Pengguna</span>
+        </a>
+    </li>
+@endif
 
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#">
-        <i class="fas fa-fw fa-spinner"></i>
-        <span style="font-size: 17px;">Kelola Pengguna</span>
-    </a>
-</li>
     <hr class="sidebar-divider d-none d-md-block">
-
     
 
 

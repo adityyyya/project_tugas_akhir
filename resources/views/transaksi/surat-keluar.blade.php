@@ -21,7 +21,7 @@
                     </h4>
                     <div class="py-3">
                         <a href="http://127.0.0.1:8000/transaction/incoming/create" class="btn btn-primary">Tambah Baru</a>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>
