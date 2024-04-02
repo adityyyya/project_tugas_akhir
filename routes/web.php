@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CreateController;
 
 
 /*
@@ -29,11 +30,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/surat-masuk', function (\Illuminate\Http\Request $request) {
         $nama_pengguna = $request->query('nama_pengguna');
-        return view('transaksi.surat-masuk', ['nama_pengguna' => $nama_pengguna]);
+        return view('suratmasuk.index', ['nama_pengguna' => $nama_pengguna]);
     })->name('surat.masuk');   
     Route::get('/surat-keluar', function (\Illuminate\Http\Request $request) {
         $nama_pengguna = $request->query('nama_pengguna');
-        return view('transaksi.surat-keluar', ['nama_pengguna' => $nama_pengguna]);
+        return view('suratkeluar.index', ['nama_pengguna' => $nama_pengguna]);
     })->name('surat.keluar');      
+
+    Route::get('/create', [CreateController::class, 'create'])->name('create');
 });
 

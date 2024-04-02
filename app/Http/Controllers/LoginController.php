@@ -24,9 +24,8 @@ class LoginController extends Controller
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-    
-            // Pengecekan peran pengguna setelah berhasil login
-            if (Auth::user()->role === 'admin') {
+
+            if (Auth::user()->role === 'admin' || Auth::user()->role === 'staff') {
                 // Jika admin, arahkan ke halaman dashboard
                 return redirect()->intended('dashboard')->with('success', 'Login successful!');
             }

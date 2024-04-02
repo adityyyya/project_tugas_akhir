@@ -22,7 +22,7 @@ class HomeController extends Controller
             $nama_pengguna = "Pengguna"; // Atau tampilkan teks default jika pengguna tidak ditemukan
         }
     
-        $view = request()->route()->getName() == 'surat.masuk' ? 'transaksi.surat-masuk' : 'transaksi.surat-keluar';
+        $view = request()->route()->getName() == 'index' ? 'suratmasuk.index' : 'suratkeluar.index';
 
         return view('home.index', [
             'title' => 'home',

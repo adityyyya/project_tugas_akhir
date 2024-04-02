@@ -87,7 +87,7 @@
 <!-- Nav Item - Klasifikasi Collapse Menu -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-controls="collapsePages2">
-        <i class="fas fa-fw fa-spinner"></i>
+        <i class="fas fa-fw fa-file"></i>
         <span style="font-size: 17px;">Klasifikasi</span>
     </a>
     <div id="collapsePages2" class="collapse" aria-labelledby="headingPages2" data-parent="#accordionSidebar">
@@ -100,7 +100,7 @@
 @if(auth()->check() && auth()->user()->role === 'admin')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-            <i class="fas fa-fw fa-spinner"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span style="font-size: 17px;">Kelola Pengguna</span>
         </a>
     </li>

@@ -19,3 +19,8 @@
     opacity: 0;
     transition-delay: 2s; /* Sesuaikan waktu tunda hilang notifikasi */
 }
+
+span.fw-bold {
+    font-weight: bold;
+  }
+
