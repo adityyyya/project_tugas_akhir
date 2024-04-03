@@ -69,6 +69,27 @@
             }, 5000); // Adjust the time (in milliseconds) as needed
         });
     </script>
+ <script>
+    function selectOption(option) {
+        document.getElementById('note').value = option;
+    }
+    </script>    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+        
+        <script>
+            $(document).ready(function() {
+                // Inisialisasi DataTables
+                $('#dataTable').DataTable({
+                    "lengthMenu": [10, 25, 50, 100], // Pilihan jumlah data yang ditampilkan
+                    "pageLength": 10, // Jumlah data yang ditampilkan per halaman secara default
+                    "searching": true // Aktifkan fitur pencarian
+                });
+            });
+        </script>  
+
 </body>
 
 </html>

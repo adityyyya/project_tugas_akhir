@@ -2,7 +2,6 @@
 
 @section('content')
 <div style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
-    {!! $suratKeluarView !!}
 <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Transaksi Surat /</span>
     Surat Masuk / <span class="font-weight-bold">Tambah Baru</span>

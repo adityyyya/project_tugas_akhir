@@ -63,9 +63,9 @@
                                 Pilihan
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Pilihan 1</a></li>
-                                <li><a class="dropdown-item" href="#">Pilihan 2</a></li>
-                                <li><a class="dropdown-item" href="#">Pilihan 3</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="selectOption('Kepala Lurah')">Kepala Lurah</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="selectOption('Sekertaris')">Sekretaris</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="selectOption('Bendahara')">Bendahara</a></li>
                             </ul>
                         </div>
                     </div>

@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Masuk</title>
-    @include('home.head')
-</head>
+@extends('home.index')
+
+@section('content')
 <body>
-  @include('home.index')
 
     <!-- Konten Surat Masuk -->
-    <div id="suratMasukContent" class="content-wrapper">
+    <div id="suratMasukContent" class="content-wrapper"  style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
         <!-- Content -->
         <div class="container-xxl flex-grow-1 container-p-y">
             <div>
@@ -27,5 +21,25 @@
         </div>
     </div>
 
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nomor Surat</th>
+                            <th>Pengirim</th>
+                            <th>Nomer Agenda</th>
+                            <th>Tanggal Surat</th>
+                            <th>Disposisi</th>
+                        </tr>
+                    </thead>
+</div> 
+
 </body>
-</html>
+
+@endsection
+
