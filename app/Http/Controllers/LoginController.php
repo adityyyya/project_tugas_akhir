@@ -16,19 +16,17 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        // $credentials = $request->only('email', 'password');
         $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required'
         ]);
     
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['email'=>$request->email,'password'=>$request->password,'status'=>'A'])) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'admin' || Auth::user()->role === 'staff') {
                 // Jika admin, arahkan ke halaman dashboard
-                return redirect()->intended('dashboard')->with('success', 'Login successful!');
-            }
+                return redirect(route('dashboard'))->with('success', 'Login successful!');
         }
     
         // Jika login gagal atau pengguna bukan admin, kembalikan pengguna ke halaman login dengan pesan kesalahan

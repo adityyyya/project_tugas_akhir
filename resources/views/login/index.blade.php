@@ -10,6 +10,7 @@
   <meta name="author" content="">
 
   <title>Login</title>
+  <link rel="icon" type="image/png" href="{{asset('images/logobanjar.png')}}">
   
   <!-- Custom fonts for this template-->
   <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -48,11 +49,11 @@
                             </div>
                         @endif
                                                            
-                      <img src="/images/logobanjar.png" width="150px" height="150px" style="margin-bottom: 30px;">
+                      <img src="{{asset('images/logobanjar.png')}}" width="150px" height="150px" style="margin-bottom: 30px;">
                       <h1 class="h4 text-gray-900 mb-4" style="font-size: 24px;">SISTEM INFORMASI ARSIP KELURAHAN ALALAK TENGAH</h1>
                       <p class="text-gray-700 mb-4">Login ke akun anda sekarang</p>
                   </div>
-                  <form id="loginForm" method="POST" action="/login" onsubmit="return validateForm()">
+                  <form id="loginForm" method="POST" action="{{route('cek_login')}}" onsubmit="return validateForm()">
                     @csrf
                     <div class="form-group">
                         <label for="email">Email Address</label>

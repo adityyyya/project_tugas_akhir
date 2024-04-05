@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,19 +19,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Administrator',
-            'email' => 'admin@admin.com',
-            'phone' => '083144951386',
-            'password' => Hash::make('admin'),
-            'role' => Role::ADMIN->status(),
-        ]);
-        User::factory()->create([
-            'name' => 'Muhamad Aditya',
-            'email' => 'aditya@admin.com',
-            'phone' => '083144951386',
-            'password' => Hash::make('admin'),
-            'role' => Role::STAFF->status(),
+        $user = New User();
+        $user -> name = 'Administrator';
+        $user -> email = 'admin@gmail.com';
+        $user -> password = Hash::make('admin');
+        $user -> level = 'Admin';
+        $user -> save();
+        DB::table('biodata')->insert([
+            'id_user'=>$user->id
         ]);
     }
     

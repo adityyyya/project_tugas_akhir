@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enums\Role;
 use App\Enums\Config as ConfigEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,10 +25,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone',
-        'role',
-        'is_active',
-        'profile_picture',
     ];
 
     /**
@@ -36,7 +33,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -47,54 +44,43 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_active' => 'boolean',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    //     'is_active' => 'boolean',
+    // ];
 
     /**
      * Get the user's profile picture
      *
      * @return Attribute
      */
-    public function profilePicture(): Attribute
+    public static function getUser()
     {
-        return Attribute::make(
-            get: function ($value) {
-                if ($value) return $value;
-
-                $url = 'https://ui-avatars.com/api/?background=6D67E4&color=fff&name=';
-                return $url . urlencode($this->name);
-            },
-        );
+        $data = User::join('biodata','biodata.id_user','=','users.id')
+        ->where('users.level','!=','Admin')
+        ->get();
+        return $data;
     }
-
-    public function scopeActive($query)
+    public static function getEditUser($id)
     {
-        return $query->where('is_active', true);
+        $data = User::join('biodata','biodata.id_user','=','users.id')
+        ->where('users.level','!=','Admin')
+        ->where('users.id',$id)
+        ->get();
+        return $data;
     }
-
-    public function scopeRole($query, Role $role)
+    public static function getUserProfil()
     {
-        return $query->where('role', $role->status());
-    }
-
-    public function scopeSearch($query, $search)
-    {
-        return $query->when($search, function($query, $find) {
-            return $query
-                ->where('name', 'LIKE', $find . '%')
-                ->orWhere('phone', $find)
-                ->orWhere('email', $find);
-        });
-    }
-
-    public function scopeRender($query, $search)
-    {
-        return $query
-            ->search($search)
-            ->role(Role::STAFF)
-            ->paginate(Config::getValueByCode(ConfigEnum::PAGE_SIZE))
-            ->appends([
-                'search' => $search,
-            ]);
+        $data = User::join('biodata','biodata.id_user','=','users.id')
+        ->where('users.id',Auth::user()->id)
+        ->first();
+        return $data;
     }
 }

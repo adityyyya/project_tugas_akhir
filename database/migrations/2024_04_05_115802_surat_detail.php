@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('level',['Admin','Kepala Lurah','Sekretaris','Bendahara']);
-            $table->enum('status',['A','I'])->default('A');
+        Schema::create('surat_detail', function (Blueprint $table) {
+            $table->Increments('id_detail');
+            $table->Integer('id_surat');
+            $table->Integer('id_klasifikasi');
+            $table->Integer('id_status');
+            $table->text('ringkasan');
+            $table->Integer('disposisi')->nullable();
+            $table->String('lampiran_surat');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('surat_detail');
     }
 };
