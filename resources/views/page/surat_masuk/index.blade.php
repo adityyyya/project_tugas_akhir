@@ -20,7 +20,14 @@
             </div>
         </div>
     </div>
-
+    <div class="col-lg-5 pb-4 mb-2" style="background: white;box-shadow:2px 2px grey;">
+        <br>
+        <span class="text">Tanggal Terima</span>
+        <input type="date" required="" value="{{request()->has('awal') ? request()->input('awal') : ''}}" title="Tanggal Terima - Awal" class="form-control mt-2" name="awal" id="awal">
+        <input type="date" required="" value="{{request()->has('akhir') ? request()->input('akhir') : ''}}" class="form-control mt-2" title="Tanggal Terima - Akhir" name="akhir" id="akhir">
+        <button class="btn btn-sm btn-success mt-2" type="button" id="filter"><i class="fa fa-filter"></i> Tampilkan</button>
+        <a href=" {{route('data.surat',$type)}} " class="btn btn-sm btn-info mt-2">Refresh</a>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Transaksi</h6>
@@ -51,31 +58,32 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
- function TanggalIndonesia(tanggal) {
-  const months = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-  ];
+   function TanggalIndonesia(tanggal) {
+      const months = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+      ];
 
-  const days = [
-  "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
-  ];
+      const days = [
+      "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
+      ];
 
-  const now = tanggal ? new Date(tanggal) : new Date();
-  const day = days[now.getDay()];
-  const date = now.getDate();
-  const month = months[now.getMonth()];
-  const year = now.getFullYear();
+      const now = tanggal ? new Date(tanggal) : new Date();
+      const day = days[now.getDay()];
+      const date = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
 
-  return `${day}, ${date} ${month} ${year}`;
-}
-$(function () {
+      return `${day}, ${date} ${month} ${year}`;
+  }
+  function SuratTable(awal=null,akhir=null) {
     $('#table_surat').DataTable({
         processing: true,
         pageLength: 10,
         responsive: true,
         ajax: {
             url: "{{ route('data.surat',$type) }}",
+            data: {awal:awal, akhir:akhir},
             error: function (jqXHR, textStatus, errorThrown) {
                 $('#table_surat').DataTable().ajax.reload();
             }
@@ -120,6 +128,20 @@ $(function () {
         { data: 'action', name: 'action', orderable: false, className: 'space' }
         ]
     });
+}
+var awal, akhir;
+$(function () {
+    SuratTable(awal,akhir);
+});
+$(document).on('click', '#filter', function() {
+    awal = $("#awal").val();
+    akhir = $("#akhir").val();
+    if (awal) {
+        $('#table_surat').DataTable().destroy();
+        SuratTable(awal, akhir);
+    }else{
+        alert('Masukkan Tanggal Pencarian');
+    }
 });
 $("#pageSuratForm").hide();
 var ajaxUrl;

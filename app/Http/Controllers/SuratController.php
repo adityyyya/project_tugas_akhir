@@ -13,6 +13,7 @@ use DataTables;
 use App\Models\KlasifikasiSurat;
 use App\Models\StatusSurat;
 use PDF;
+date_default_timezone_set('Asia/Ujung_Pandang');
 
 class SuratController extends Controller
 {
@@ -27,7 +28,7 @@ class SuratController extends Controller
 			$tipe_surat = 'Keluar';
 		}
 		if ($request->ajax()) {
-			$data = Surat::getDataSurat($type);
+			$data = Surat::getDataSurat($request, $type);
 			return DataTables::of($data)
 			->addIndexColumn()
 			->addColumn('', function($data) {
@@ -198,19 +199,7 @@ class SuratController extends Controller
 	}
 	public function get_notif_surat()
 	{
-		$data = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
-		->leftJoin('users as disposisi','disposisi.id','=','surat_detail.disposisi')
-		->leftJoin('klasifikasi_surat','klasifikasi_surat.id_klasifikasi','=','surat_detail.id_klasifikasi')
-		->leftJoin('status_surat','status_surat.id_status','=','surat_detail.id_status')
-		->select(
-			\DB::RAW('surat_detail.ringkasan as ringkasan'),
-			\DB::RAW('surat.pengirim as pengirim'),
-			\DB::RAW('surat.created_at as created_at')
-		)
-		->where('surat.tipe_surat','Masuk')
-		->where('surat_detail.disposisi','!=',NULL)
-		->where('surat_detail.disposisi',Auth::user()->id)
-		->get();
+		$data = Surat::getNotifSurat();
 		return response()->json($data);
 	}
 }

@@ -10,7 +10,7 @@ $profil = App\Models\User::getUserProfil();
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Sistem Informasi E-Arsip Kelurahan Alalak Tengah</title>
-  <link rel="icon" type="image/png" href="{{asset('images/logobanjar.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('images/logobanjar.png')}}">
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css" rel="stylesheet') }}" type="text/css">
     <link
@@ -153,6 +153,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
 </body>
 @yield('scripts')
+@if(Auth::user()->level != 'Admin')
 <script type="text/javascript">
     function waktuYangLalu(dateTimeString) {
         var dateTime = new Date(dateTimeString);
@@ -174,38 +175,34 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             return "Baru saja";
         }
     }
-
-// Contoh penggunaan
-var dateTimeString = "2024-04-03 13:02:28";
-console.log(waktuYangLalu(dateTimeString));
-
-function read() {
-   $.ajax({
-    type: "GET",
-    url: "{{route('get_notif_surat')}}",
-    success: function(response) {
-        var html = "";
-        if (response.length > 3) {
-            $("#count_notif_message").text('3+');
-        }else{
-            $("#count_notif_message").text(response.length);
-        }
-        for (let x = 0; response.length > x; x++) {
-          html += "<a class='dropdown-item d-flex align-items-center' href='#'><div class='dropdown-list-image mr-3'><img class='rounded-circle' src='{{ asset('img/undraw_profile_1.svg') }}' alt='...''><div class='status-indicator bg-success'></div></div><div class='font-weight-bold'><div class='text-truncate'>";
-          html += 'Pengirim: '+response[x].pengirim;
-          html += "</div><div class='small text-gray-500'>"+response[x].ringkasan+" · "+waktuYangLalu(response[x].created_at)+"</div></div></a>";
+    function read() {
+       $.ajax({
+        type: "GET",
+        url: "{{route('get_notif_surat')}}",
+        success: function(response) {
+            var html = "";
+            if (response.length > 3) {
+                $("#count_notif_message").text('3+');
+            }else{
+                $("#count_notif_message").text(response.length);
+            }
+            for (let x = 0; response.length > x; x++) {
+              html += "<a class='dropdown-item d-flex align-items-center' href='#'><div class='dropdown-list-image mr-3'><img class='rounded-circle' src='{{ asset('img/undraw_profile_1.svg') }}' alt='...''><div class='status-indicator bg-success'></div></div><div class='font-weight-bold'><div class='text-truncate'>";
+              html += 'Pengirim: '+response[x].pengirim;
+              html += "</div><div class='small text-gray-500'>"+response[x].ringkasan+" · "+waktuYangLalu(response[x].created_at)+"</div></div></a>";
+          }
+          $("#content_notif_message").html(html);
+      },
+      error: function(response) {
+          read();
       }
-      $("#content_notif_message").html(html);
-  },
-  error: function(response) {
-      read();
-  }
-});
-}
-$(document).ready(function() {
-  setInterval(function(){
-    read()
-}, 2000);   
-})
+  });
+   }
+   $(document).ready(function() {
+      setInterval(function(){
+        read()
+    }, 2000);   
+  })
 </script>
+@endif
 </html>

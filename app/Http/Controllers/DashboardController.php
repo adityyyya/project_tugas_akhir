@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use DataTables;
-
+date_default_timezone_set('Asia/Ujung_Pandang');
 
 class DashboardController extends Controller
 {
@@ -19,7 +19,7 @@ class DashboardController extends Controller
 	{
 		$surat_masuk = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
 		->leftJoin('users','users.id','=','surat_detail.disposisi')
-		->where('surat.tanggal_surat',date('Y-m-d'))
+		->where('surat.tanggal_terima',date('Y-m-d'))
 		->where('surat.tipe_surat','Masuk');
 		// if (Auth::user()->level != 'Admin') {
 		// 	$surat_masuk->where('surat_detail.disposisi',Auth::user()->id);
@@ -29,12 +29,13 @@ class DashboardController extends Controller
 		$disposisi = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
 		->leftJoin('users','users.id','=','surat_detail.disposisi')
 		->where('surat.tipe_surat','Masuk')
+		->where('surat.tanggal_terima',date('Y-m-d'))
 		->where('surat_detail.disposisi','!=',NULL);
 		if (Auth::user()->level != 'Admin') {
 			$disposisi->where('surat_detail.disposisi',Auth::user()->id);
 		}
 		$disposisi = $disposisi->count();
-		$surat_keluar = Surat::where('tanggal_surat',date('Y-m-d'))
+		$surat_keluar = Surat::where('tanggal_terima',date('Y-m-d'))
 		->where('tipe_surat','Keluar')
 		->count();
 		$pengguna = User::where('level','!=','Admin')

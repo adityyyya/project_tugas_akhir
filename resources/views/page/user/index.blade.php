@@ -116,6 +116,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
                         <option value="Sekretaris">Sekretaris</option>
                         <option value="Bendahara">Bendahara</option>
                         <option value="Kepala Lurah">Kepala Lurah</option>
+                        <option value="Petugas">Petugas</option>
                     </select>
                 </div>
             </div>
@@ -235,8 +236,10 @@ $(function () {
                     return '<span class="badge bg-info text-white">'+data+'</span>';
                 }else if(data == 'Bendahara'){
                     return '<span class="badge bg-success text-white">'+data+'</span>';
-                }else{
+                }else if(data == 'Kepala Lurah'){
                     return '<span class="badge bg-primary text-white">'+data+'</span>';
+                }else{
+                    return '<span class="badge bg-secondary text-white">'+data+'</span>';
                 }
             }  
         },
