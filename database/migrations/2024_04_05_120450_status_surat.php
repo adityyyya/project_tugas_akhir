@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('status_surat', function (Blueprint $table) {
-            $table->Increments('id_status');
+            $table->bigIncrements('id_status');
             $table->String('nama_status');
             $table->timestamps();
         });

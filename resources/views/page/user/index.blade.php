@@ -90,7 +90,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>Jenis Kelamin <span class="text-danger">*</span></label>
-                    <select class="form-control select2" style="width: 100%;" id="jenis_kelamin" name="jenis_kelamin">
+                    <select class="form-control select2" required="" style="width: 100%;" id="jenis_kelamin" name="jenis_kelamin">
                         <option value="Laki-Laki">Laki-Laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
@@ -112,7 +112,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>Level/Role <span class="text-danger">*</span></label>
-                    <select class="form-control select2" style="width: 100%;" id="level" name="level">
+                    <select class="form-control select2" required="" style="width: 100%;" id="level" name="level">
                         <option value="Sekretaris">Sekretaris</option>
                         <option value="Bendahara">Bendahara</option>
                         <option value="Kepala Lurah">Kepala Lurah</option>
@@ -123,7 +123,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>Status Pengguna <span class="text-danger">*</span></label>
-                    <select class="form-control select2" style="width: 100%;" id="status" name="status">
+                    <select class="form-control select2" required="" style="width: 100%;" id="status" name="status">
                         <option value="A">Aktif</option>
                         <option value="I">Non Aktif</option>
                     </select>

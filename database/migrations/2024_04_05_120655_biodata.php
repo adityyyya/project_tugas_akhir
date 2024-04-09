@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('biodata', function (Blueprint $table) {
             $table->Increments('id_biodata');
-            $table->Integer('id_user');
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->String('nip')->nullable();
             $table->enum('jenis_kelamin',['Laki-Laki','Perempuan'])->default('Laki-Laki');
             $table->String('telepon')->nullable();
