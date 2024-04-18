@@ -54,16 +54,16 @@
                     </div>
                     <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                         <div>
-                            <label for="disposisi" class="form-label">Disposisi <span class="text-danger">*</span></label>
+                            <label for="disposisi" class="form-label">Disposisi</label>
                             <div class="input-group">
-                                <select class="form-control select2 disposisi" required="" style="width: 100%;" name="disposisi" id="disposisi">
+                                <select class="form-control select2 disposisi" style="width: 100%;" name="disposisi" id="disposisi">
                                     @foreach($anggota as $agt)
                                     <option value="{{$agt->id}}">{{$agt->name}} ({{$agt->level}})</option>
                                     @endforeach
                                 </select>
                             </div>
                             <span class="error invalid-feedback"></span>
-                        </div>
+                        </div>                        
                     </div>           
                     <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                         <div>

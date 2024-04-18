@@ -43,8 +43,9 @@
                             <th>Nomor Agenda</th>
                             <th>Tanggal Surat</th>
                             <th>Disposisi</th>
+                            <th>Ringkasan</th> 
                             <th>Action</th>
-                        </tr>
+                        </tr>                        
                     </thead>
                     <tbody>
                     </tbody>
@@ -124,6 +125,12 @@
             render: function (data, type, row) {
                 return data;
             }  
+        },
+        { 
+        data: 'ringkasan', 
+        name: 'ringkasan', 
+        render: function (data, type, row) {
+            return data;}    
         },
         { data: 'action', name: 'action', orderable: false, className: 'space' }
         ]

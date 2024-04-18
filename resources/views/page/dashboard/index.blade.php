@@ -21,8 +21,10 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$surat_masuk}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-envelope fa-2x" style="color: blue !important;"></i>
-                        </div>
+                            <a href="{{ route('data.surat', ['type' => 'masuk']) }}">
+                                <i class="fas fa-envelope fa-2x" style="color: blue !important;"></i>
+                            </a>
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -39,8 +41,10 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$surat_keluar}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-envelope fa-2x" style="color: green;"></i>
-                        </div>
+                            <a href="{{ route('data.surat', ['type' => 'keluar']) }}">
+                                <i class="fas fa-envelope fa-2x" style="color: rgb(38, 175, 0) !important;"></i>
+                            </a>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -61,8 +65,10 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-envelope fa-2x" style="color: #008080;"></i>
-                        </div>
+                            <a  href=" {{route('galery_surat','masuk')}} ">
+                                <i class="fas fa-envelope fa-2x" style="color: rgb(0, 175, 149) !important;"></i>
+                            </a>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -80,7 +86,9 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$pengguna}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user fa-2x" style="color: yellow;"></i>
+                            <a  href=" {{route('data_user')}} ">
+                            <i class="fas fa-user fa-2x" style="color: rgb(255, 171, 3);"></i>
+                            <a/>
                         </div>
                     </div>
                 </div>

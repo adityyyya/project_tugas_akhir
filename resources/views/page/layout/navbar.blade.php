@@ -109,7 +109,7 @@ aria-labelledby="messagesDropdown">
 <div id="content_notif_message">
 
 </div>
-<a class="dropdown-item text-center small text-gray-500" href=" {{route('data.surat','masuk')}} ">Lihat Semua Disposisi</a>
+<a class="dropdown-item text-center small text-gray-500" href=" {{route('galery_surat','masuk')}} ">Lihat Semua Disposisi</a>
 </div>
 </li>
 @endif

@@ -14,12 +14,13 @@
 </head>
 <style type="text/css">
   @page {
-    margin: 100px 25px;
+    size: A4;
+    margin: 2.10cm
   }
 
   header {
     position: fixed;
-    top: -100px;
+    top: -20px;
     left: 0px;
     right: 0px;
     height: 50px;
@@ -48,41 +49,49 @@
   }
 </style>
 <body>
- <header>
-  <img src="{{asset('images/logobanjar.png')}}" width="85" height="85" style="float: left;margin-top: 10px;">Sistem Informasi E-Arsip <br>Kelurahan Alalak Tengah<br>
-  <small>Laporan Surat Masuk | Periode Tanggal Surat : {{ request()->has('awal') ? request()->input('awal') : '-' }} - {{ request()->has('akhir') ? request()->input('akhir') : '-' }}</small>
+ <header style="text-align: center;">
+  <img src="{{asset('images/logobanjar.png')}}" width="100" height="100" style="position: absolute; top: 20px; left: 10px;">
+  <<div style="text-align: top; margin-left: 2px;">
+    <span style="margin-top: 20px;">PEMERINTRAH KOTA BANJARMASIN</span><br>
+    <span>KECAMATAN BANJARMASIN UTARA</span><br>
+    <span>KELURAHAN ALALAK TENGAH</span>
+</div>
+
+  <small style="text-align: center; display: block; font-size: 15px">Laporan Surat Masuk | Periode Tanggal Surat : 
+    {{ request()->has('awal') ? request()->input('awal') : date('Y-m-d') }} 
+    {{ request()->has('akhir') ? request()->input('akhir') : date('Y-m-d') }} ({{ date('d F Y') }})
+</small>
+<hr style="border: 1px solid black;">
 </center>
 </header>
 <main>
- <div class="card-body">
+ <div class="card-body" style="margin-top: 100;">
   <br>
   <table style="width: 100%;padding: 0;margin: 0;" cellpadding="6" cellspacing="0" border="1">
    <thead>
     <tr style="background: #eee;">
-     <th>No. </th>
-     <th>Nomor Surat</th>
-     <th>Pengirim</th>
-     <th>Nomor Agenda</th>
-     <th>Tanggal Surat</th>
-     <th>Tanggal Terima</th>
-     <th>Keterangan</th>
-     <th>Ringkasan</th>
-     <th>Disposisi</th>
+     <th style="font-size: 12px;">No. </th>
+     <th style="font-size: 12px;">Nomor Surat</th>
+     <th style="font-size: 12px;">Pengirim</th>
+     <th style="font-size: 12px;">Nomer Agenda</th>
+     <th style="font-size: 12px; width:100px;">Tanggal Surat</th>
+     <th style="font-size: 12px; width:100px;">Tanggal Terima</th>
+     <th style="font-size: 12px;">Keterangan</th>
+     <th style="font-size: 12px;">Ringkasan</th>
    </tr>
  </thead>
  <tbody>
   @foreach($data as $dt)
   <tr>
-    <td>{{$loop->index+1}}</td>
-    <td>{{$dt->nomor_surat}}</td>
-    <td>{{$dt->pengirim}}</td>
-    <td>{{$dt->nomor_agenda}}</td>
-    <td>{{$dt->tanggal_surat}}</td>
-    <td>{{$dt->tanggal_terima}}</td>
-    <td>{{$dt->nama_klasifikasi}}</td>
-    <td>{{$dt->ringkasan}}</td>
-    <td>{{$dt->name}}</td>
-  </tr>
+    <td style="font-size: 12px; text-align: center;">{{$loop->index+1}}</td>
+    <td style="font-size: 12px;">{{$dt->nomor_surat}}</td>
+    <td style="font-size: 12px;">{{$dt->pengirim}}</td>
+    <td style="font-size: 12px; text-align: center;">{{$dt->nomor_agenda}}</td>
+    <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_surat}}</td>
+    <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_terima}}</td>
+    <td style="font-size: 12px; text-align: center;">{{$dt->nama_klasifikasi}}</td>
+    <td style="font-size: 12px;">{{$dt->ringkasan}}</td>
+</tr>
   @endforeach
 </tbody>
 </table>

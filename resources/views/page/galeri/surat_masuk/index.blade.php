@@ -37,19 +37,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $dt)
-                        <tr>
-                            <td>{{$loop->index+1}}</td>
-                            <td>{{$dt->nomor_surat}}</td>
-                            <td>{{$dt->pengirim}}</td>
-                            <td>{{$dt->nomor_agenda}}</td>
-                            <td>{{$dt->tanggal_surat}}</td>
-                            <td>{{$dt->name}}</td>
-                            <td>
-                                <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @php
+                        $index = 1; // Variabel untuk menyimpan nomor urutan
+                    @endphp
+                    @foreach($data as $dt)
+                        @if($dt->name) <!-- Memeriksa apakah ada disposisi -->
+                            <tr>
+                                <td>{{$index}}</td> <!-- Menggunakan variabel index -->
+                                <td>{{$dt->nomor_surat}}</td>
+                                <td>{{$dt->pengirim}}</td>
+                                <td>{{$dt->nomor_agenda}}</td>
+                                <td>{{$dt->tanggal_surat}}</td>
+                                <td>{{$dt->name}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
+                                </td>
+                            </tr>
+                            @php
+                                $index++; // Menambahkan nilai index setiap kali loop
+                            @endphp
+                        @endif
+                    @endforeach                    
                     </tbody>
                 </table>
             </div> 

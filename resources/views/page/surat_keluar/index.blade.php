@@ -42,6 +42,7 @@
                             <th>Pengirim</th>
                             <th>Nomer Agenda</th>
                             <th>Tanggal Surat</th>
+                            <th>Ringkasan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -117,6 +118,12 @@
             render: function (data, type, row) {
                 return TanggalIndonesia(data);
             }  
+        },
+        { 
+        data: 'ringkasan', 
+        name: 'ringkasan', 
+        render: function (data, type, row) {
+            return data;}  
         },
         { data: 'action', name: 'action', orderable: false, className: 'space' }
         ]

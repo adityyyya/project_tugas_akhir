@@ -83,10 +83,10 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>NIP <span class="text-danger">*</span></label>
-                    <input type="number" required="" class="form-control" id="nip" name="nip">
+                    <label>NIP</label>
+                    <input type="number" class="form-control" id="nip" name="nip">
                 </div>
-            </div>
+            </div>            
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>Jenis Kelamin <span class="text-danger">*</span></label>
@@ -115,7 +115,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
                     <select class="form-control select2" required="" style="width: 100%;" id="level" name="level">
                         <option value="Sekretaris">Sekretaris</option>
                         <option value="Bendahara">Bendahara</option>
-                        <option value="Kepala Lurah">Kepala Lurah</option>
+                        <option value="Lurah">Lurah</option>
                         <option value="Petugas">Petugas</option>
                     </select>
                 </div>
@@ -236,7 +236,7 @@ $(function () {
                     return '<span class="badge bg-info text-white">'+data+'</span>';
                 }else if(data == 'Bendahara'){
                     return '<span class="badge bg-success text-white">'+data+'</span>';
-                }else if(data == 'Kepala Lurah'){
+                }else if(data == 'Lurah'){
                     return '<span class="badge bg-primary text-white">'+data+'</span>';
                 }else{
                     return '<span class="badge bg-secondary text-white">'+data+'</span>';
