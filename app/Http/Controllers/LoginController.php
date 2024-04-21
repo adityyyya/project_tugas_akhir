@@ -24,11 +24,13 @@ class LoginController extends Controller
     
         if (Auth::attempt(['email'=>$request->email,'password'=>$request->password,'status'=>'A'])) {
             $request->session()->regenerate();
-
-                // Jika admin, arahkan ke halaman dashboard
-                return redirect(route('dashboard'))->with('success', 'Login successful!');
-        }
-    
+        
+            $userId = Auth::id(); // Mendapatkan ID pengguna yang login
+            session(['userId' => $userId]); // Menyimpan ID pengguna dalam sesi
+        
+            // Jika admin, arahkan ke halaman dashboard
+            return redirect(route('dashboard'))->with('success', 'Login successful!');
+        }        
         // Jika login gagal atau pengguna bukan admin, kembalikan pengguna ke halaman login dengan pesan kesalahan
         return back()->with('LoginError', 'Login Failed!.');
     }
