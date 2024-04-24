@@ -10,7 +10,7 @@
             <div>
                 <div class="d-flex justify-content-between flex-column flex-sm-row">
                     <h4 class="fw-bold py-3 mb-4">
-                        <span class="text-muted fw-light">Buku Agebda /</span>
+                        <span class="text-muted fw-light">Buku Agenda /</span>
                         <span class="font-weight-bold">Surat {{$tipe_surat}}</span>
                     </h4>
                 </div>
@@ -21,7 +21,7 @@
         <form method="get" action="">
             @csrf
             <br>
-            <span class="text">Tanggal Terima</span>
+            <span class="text">Tanggal Dikirim</span>
             <input type="date" required="" value="{{request()->has('awal') ? request()->input('awal') : ''}}" title="Tanggal Terima - Awal" class="form-control mt-2" name="awal">
             <input type="date" required="" value="{{request()->has('akhir') ? request()->input('akhir') : ''}}" class="form-control mt-2" title="Tanggal Terima - Akhir" name="akhir">
             <button class="btn btn-sm btn-success mt-2"><i class="fa fa-filter"></i> Tampilkan</button>
@@ -44,7 +44,7 @@
                             <th>Pengirim</th>
                             <th>Nomor Agenda</th>
                             <th>Tanggal Surat</th>
-                            <th>Tanggal Terima</th>
+                            <th>Tanggal Dikirim</th>
                             <th>Keterangan</th>
                         </tr>
                     </thead>

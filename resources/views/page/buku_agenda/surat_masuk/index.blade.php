@@ -10,7 +10,7 @@
             <div>
                 <div class="d-flex justify-content-between flex-column flex-sm-row">
                     <h4 class="fw-bold py-3 mb-4">
-                        <span class="text-muted fw-light">Buku Agebda /</span>
+                        <span class="text-muted fw-light">Buku Agenda /</span>
                         <span class="font-weight-bold">Surat {{$tipe_surat}}</span>
                     </h4>
                 </div>
@@ -25,7 +25,7 @@
             <input type="date" required="" value="{{request()->has('awal') ? request()->input('awal') : ''}}" title="Tanggal Terima - Awal" class="form-control mt-2" name="awal">
             <input type="date" required="" value="{{request()->has('akhir') ? request()->input('akhir') : ''}}" class="form-control mt-2" title="Tanggal Terima - Akhir" name="akhir">
             <button class="btn btn-sm btn-success mt-2"><i class="fa fa-filter"></i> Tampilkan</button>
-            <a href=" {{route('buku_agenda',$type)}} " class="btn btn-sm btn-info mt-2">Refresh</a>
+            <a href=" {{route('buku_agenda',$type)}} " class="btn btn-sm btn-info mt-2">Reset</a>
             <a href="{{route('export_buku_agenda',['type'=>$type,'awal'=>request()->has('awal') ? request()->input('awal') : '','akhir'=>request()->has('akhir') ? request()->input('akhir') : '','keyword'=>'PDF'])}}" style="float: right;" target="_blank" class="btn btn-sm btn-danger mt-2"><i class="fa fa-file-pdf"></i></a>
             <a href="{{route('export_buku_agenda',['type'=>$type,'awal'=>request()->has('awal') ? request()->input('awal') : '','akhir'=>request()->has('akhir') ? request()->input('akhir') : '','keyword'=>'Excel'])}}" style="float: right;" target="_blank" class="btn btn-sm btn-success mt-2 mr-2"><i class="fa fa-file-excel"></i></a>
         </form>

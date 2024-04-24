@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-sm-12 col-12 col-md-6 col-lg-6">
                         <div class="mb-3">
-                            <label for="tanggal_terima" class="form-label">Tanggal Diterima <span class="text-danger">*</span></label>
+                            <label for="tanggal_terima" class="form-label">Tanggal Dikirim<span class="text-danger">*</span></label>
                             <input type="date" required="" class="form-control tanggal_terima" id="tanggal_terima" name="tanggal_terima" value="" />
                             <span class="error invalid-feedback"></span>
                         </div>

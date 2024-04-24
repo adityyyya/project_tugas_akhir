@@ -35,7 +35,7 @@
                             <th>Email</th>
                             <th>NIP</th>
                             <th>Jenis Kelamin</th>
-                            <th>Level</th>
+                            <th>Jabatan</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -111,7 +111,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Level/Role <span class="text-danger">*</span></label>
+                    <label>Jabatan <span class="text-danger">*</span></label>
                     <select class="form-control select2" required="" style="width: 100%;" id="level" name="level">
                         <option value="Sekretaris">Sekretaris</option>
                         <option value="Bendahara">Bendahara</option>

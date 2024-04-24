@@ -10,9 +10,9 @@
             <div>
                 <div class="d-flex justify-content-between flex-column flex-sm-row">
                     <h4 class="fw-bold py-3 mb-4">
-                        <span class="text-muted fw-light">Galery /</span>
-                        <span class="font-weight-bold">Surat {{$tipe_surat}}</span>
-                    </h4>
+                        <span class="text-muted fw-light">Gallery /</span>
+                        <span class="font-weight-bold">Surat {{$tipe_surat === 'masuk' ? 'Masuk' : ''}}</span>
+                    </h4>                    
                 </div>
             </div>
         </div>
@@ -38,27 +38,27 @@
                     </thead>
                     <tbody>
                         @php
-                        $index = 1; // Variabel untuk menyimpan nomor urutan
-                    @endphp
-                    @foreach($data as $dt)
-                        @if($dt->name) <!-- Memeriksa apakah ada disposisi -->
-                            <tr>
-                                <td>{{$index}}</td> <!-- Menggunakan variabel index -->
-                                <td>{{$dt->nomor_surat}}</td>
-                                <td>{{$dt->pengirim}}</td>
-                                <td>{{$dt->nomor_agenda}}</td>
-                                <td>{{$dt->tanggal_surat}}</td>
-                                <td>{{$dt->name}}</td>
-                                <td>
-                                    <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
-                                </td>
-                            </tr>
-                            @php
-                                $index++; // Menambahkan nilai index setiap kali loop
-                            @endphp
-                        @endif
-                    @endforeach                    
-                    </tbody>
+                        $index = count($data); // Menginisialisasi indeks dengan total data
+                        @endphp
+                        @foreach($data as $dt)
+                            @if($dt->name) <!-- Memeriksa apakah ada disposisi -->
+                                <tr>
+                                    <td>{{$index}}</td> <!-- Menggunakan indeks mundur -->
+                                    <td>{{$dt->nomor_surat}}</td>
+                                    <td>{{$dt->pengirim}}</td>
+                                    <td>{{$dt->nomor_agenda}}</td>
+                                    <td>{{$dt->tanggal_surat}}</td>
+                                    <td>{{$dt->name}}</td>
+                                    <td>
+                                        <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                                @php
+                                $index--; // Mengurangi nilai indeks setiap kali loop
+                                @endphp
+                            @endif
+                        @endforeach
+                    </tbody>                                                                                                                                                                                                    
                 </table>
             </div> 
         </div>

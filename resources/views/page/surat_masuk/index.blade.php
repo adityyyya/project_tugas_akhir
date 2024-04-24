@@ -26,7 +26,7 @@
         <input type="date" required="" value="{{request()->has('awal') ? request()->input('awal') : ''}}" title="Tanggal Terima - Awal" class="form-control mt-2" name="awal" id="awal">
         <input type="date" required="" value="{{request()->has('akhir') ? request()->input('akhir') : ''}}" class="form-control mt-2" title="Tanggal Terima - Akhir" name="akhir" id="akhir">
         <button class="btn btn-sm btn-success mt-2" type="button" id="filter"><i class="fa fa-filter"></i> Tampilkan</button>
-        <a href=" {{route('data.surat',$type)}} " class="btn btn-sm btn-info mt-2">Refresh</a>
+        <a href=" {{route('data.surat',$type)}} " class="btn btn-sm btn-info mt-2">Reset</a>
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -78,11 +78,11 @@
       return `${day}, ${date} ${month} ${year}`;
   }
   function SuratTable(awal=null,akhir=null) {
-    $('#table_surat').DataTable({
+   $('#table_surat').DataTable({
         processing: true,
         pageLength: 10,
         responsive: true,
-        ajax: {
+        ajax: { 
             url: "{{ route('data.surat',$type) }}",
             data: {awal:awal, akhir:akhir},
             error: function (jqXHR, textStatus, errorThrown) {
