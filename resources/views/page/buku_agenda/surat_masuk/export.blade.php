@@ -51,7 +51,7 @@
 <body>
  <header style="text-align: center;">
   <img src="{{asset('images/logobanjar.png')}}" width="100" height="100" style="position: absolute; top: 20px; left: 10px;">
-  <<div style="text-align: top; margin-left: 2px;">
+  <div style="text-align: top; margin-left: 2px;">
     <span style="margin-top: 20px;">PEMERINTRAH KOTA BANJARMASIN</span><br>
     <span>KECAMATAN BANJARMASIN UTARA</span><br>
     <span>KELURAHAN ALALAK TENGAH</span>
