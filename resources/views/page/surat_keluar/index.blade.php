@@ -20,13 +20,18 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-5 pb-4 mb-2" style="background: white;box-shadow:2px 2px grey;">
-        <br>
-        <span class="text">Tanggal Dikirim</span>
-        <input type="date" required="" value="{{request()->has('awal') ? request()->input('awal') : ''}}" title="Tanggal Terima - Awal" class="form-control mt-2" name="awal" id="awal">
-        <input type="date" required="" value="{{request()->has('akhir') ? request()->input('akhir') : ''}}" class="form-control mt-2" title="Tanggal Terima - Akhir" name="akhir" id="akhir">
-        <button class="btn btn-sm btn-success mt-2" type="button" id="filter"><i class="fa fa-filter"></i> Tampilkan</button>
-        <a href=" {{route('data.surat',$type)}} " class="btn btn-sm btn-info mt-2">Reset</a>
+    <div class="row">
+        <div class="col-lg-7">
+            <!-- Konten di sebelah kiri (tombol tambah) -->
+        </div>
+        <div class="col-lg-5 pb-4 mb-2" style="background: white;box-shadow:2px 2px grey;">
+            <br>
+            <span class="text">Tanggal Dikirim</span>
+            <input type="date" required="" value="{{request()->has('awal') ? request()->input('awal') : ''}}" title="Tanggal Terima - Awal" class="form-control mt-2" name="awal" id="awal">
+            <input type="date" required="" value="{{request()->has('akhir') ? request()->input('akhir') : ''}}" class="form-control mt-2" title="Tanggal Terima - Akhir" name="akhir" id="akhir">
+            <button class="btn btn-sm btn-success mt-2" type="button" id="filter"><i class="fa fa-filter"></i> Tampilkan</button>
+            <a href="{{route('data.surat',$type)}}" class="btn btn-sm btn-info mt-2">Reset</a>
+        </div>
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -39,8 +44,7 @@
                         <tr>
                             <th>No. </th>
                             <th>Nomor Surat</th>
-                            <th>Pengirim</th>
-                            <th>Nomer Agenda</th>
+                            <th>Penerima</th>
                             <th>Tanggal Surat</th>
                             <th>Ringkasan</th>
                             <th>Action</th>
@@ -101,13 +105,6 @@
         { 
             data: 'pengirim', 
             name: 'pengirim', 
-            render: function (data, type, row) {
-                return data;
-            }  
-        },
-        { 
-            data: 'nomor_agenda', 
-            name: 'nomor_agenda', 
             render: function (data, type, row) {
                 return data;
             }  

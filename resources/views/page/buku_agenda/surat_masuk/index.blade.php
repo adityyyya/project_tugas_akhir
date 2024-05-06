@@ -46,7 +46,6 @@
                             <th>No. </th>
                             <th>Nomor Surat</th>
                             <th>Pengirim</th>
-                            <th>Nomor Agenda</th>
                             <th>Tanggal Surat</th>
                             <th>Tanggal Terima</th>
                             <th>Keterangan</th>
@@ -59,7 +58,6 @@
                             <td>{{$loop->index+1}}</td>
                             <td>{{$dt->nomor_surat}}</td>
                             <td>{{$dt->pengirim}}</td>
-                            <td>{{$dt->nomor_agenda}}</td>
                             <td>{{$dt->tanggal_surat}}</td>
                             <td>{{$dt->tanggal_terima}}</td>
                             <td>{{$dt->nama_klasifikasi}}</td>

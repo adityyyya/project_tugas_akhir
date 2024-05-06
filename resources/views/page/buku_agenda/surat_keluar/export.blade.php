@@ -53,7 +53,7 @@
   <header style="text-align: center;">
     <img src="{{ asset('images/logobanjar.png') }}" width="100" height="100" style="position: absolute; top: 20px; left: 10px;">
     <div style="text-align: top; margin-left: 2px;">
-      <span style="margin-top: 20px;">PEMERINTRAH KOTA BANJARMASIN</span><br>
+      <span style="margin-top: 20px;">PEMERINTAH KOTA BANJARMASIN</span><br>
       <span>KECAMATAN BANJARMASIN UTARA</span><br>
       <span>KELURAHAN ALALAK TENGAH</span>
   </div>
@@ -73,7 +73,6 @@
       <th style="font-size: 12px;">No. </th>
       <th style="font-size: 12px;">Nomor Surat</th>
       <th style="font-size: 12px;">Pengirim</th>
-      <th style="font-size: 12px;">Nomer Agenda</th>
       <th style="font-size: 12px; width:100px;">Tanggal Surat</th>
       <th style="font-size: 12px; width:100px;">Tanggal Terima</th>
       <th style="font-size: 12px;">Keterangan</th>
@@ -86,7 +85,6 @@
     <td style="font-size: 12px; text-align: center;">{{$loop->index+1}}</td>
     <td style="font-size: 12px;">{{$dt->nomor_surat}}</td>
     <td style="font-size: 12px;">{{$dt->pengirim}}</td>
-    <td style="font-size: 12px; text-align: center;">{{$dt->nomor_agenda}}</td>
     <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_surat}}</td>
     <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_terima}}</td>
     <td style="font-size: 12px; text-align: center;">{{$dt->nama_klasifikasi}}</td>

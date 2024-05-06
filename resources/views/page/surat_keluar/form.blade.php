@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                         <div class="mb-3">
-                            <label for="pengirim" class="form-label">Pengirim <span class="text-danger">*</span></label>
+                            <label for="pengirim" class="form-label">Penerima <span class="text-danger">*</span></label>
                             <input type="text" required="" class="form-control pengirim" id="pengirim" name="pengirim" value="" />
                             <span class="error invalid-feedback"></span>
                         </div>

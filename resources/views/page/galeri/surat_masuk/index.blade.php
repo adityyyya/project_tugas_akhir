@@ -4,6 +4,32 @@
 <div id="loading">
     <span class="fa fa-spinner fa-spin fa-3x"></span>
 </div>
+<!-- Modal untuk edit disposisi -->
+<div class="modal fade" id="modal_edit_disposisi" tabindex="-1" aria-labelledby="modal_edit_disposisi" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_edit_disposisi_title">Edit Disposisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form untuk mengedit disposisi -->
+                <form id="form_edit_disposisi">
+                    <div class="form-group">
+                        <label for="disposisi">Disposisi</label>
+                        <input type="text" class="form-control" id="disposisi" name="disposisi">
+                    </div>
+                    <!-- Tombol untuk menyimpan perubahan disposisi -->
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="pageSurat">
     <div id="" class="content-wrapper"  style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
         <div class="container-xxl flex-grow-1 container-p-y">
@@ -18,7 +44,7 @@
         </div>
     </div>
 
-    <div class="card shadow mb-4">
+   <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Galery Surat</h6>
         </div>
@@ -30,35 +56,24 @@
                             <th>No. </th>
                             <th>Nomor Surat</th>
                             <th>Pengirim</th>
-                            <th>Nomor Agenda</th>
                             <th>Tanggal Surat</th>
-                            <th>Disposisi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                        $index = count($data); // Menginisialisasi indeks dengan total data
-                        @endphp
-                        @foreach($data as $dt)
-                            @if($dt->name) <!-- Memeriksa apakah ada disposisi -->
-                                <tr>
-                                    <td>{{$index}}</td> <!-- Menggunakan indeks mundur -->
-                                    <td>{{$dt->nomor_surat}}</td>
-                                    <td>{{$dt->pengirim}}</td>
-                                    <td>{{$dt->nomor_agenda}}</td>
-                                    <td>{{$dt->tanggal_surat}}</td>
-                                    <td>{{$dt->name}}</td>
-                                    <td>
-                                        <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
-                                    </td>
-                                </tr>
-                                @php
-                                $index--; // Mengurangi nilai indeks setiap kali loop
-                                @endphp
-                            @endif
+                        @foreach($data->reverse() as $dt)
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$dt->nomor_surat}}</td>
+                            <td>{{$dt->pengirim}}</td>
+                            <td>{{$dt->tanggal_surat}}</td>
+                            <td>
+                                <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
+                                <a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> 
+                            </td>
+                        </tr>
                         @endforeach
-                    </tbody>                                                                                                                                                                                                    
+                    </tbody>        
                 </table>
             </div> 
         </div>
@@ -68,32 +83,32 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
- function TanggalIndonesia(tanggal) {
-  const months = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-  ];
+   function TanggalIndonesia(tanggal) {
+      const months = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+      ];
 
-  const days = [
-  "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
-  ];
+      const days = [
+      "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
+      ];
 
-  const now = tanggal ? new Date(tanggal) : new Date();
-  const day = days[now.getDay()];
-  const date = now.getDate();
-  const month = months[now.getMonth()];
-  const year = now.getFullYear();
+      const now = tanggal ? new Date(tanggal) : new Date();
+      const day = days[now.getDay()];
+      const date = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
 
-  return `${day}, ${date} ${month} ${year}`;
-}
-$(document).ready(function() {
+      return `${day}, ${date} ${month} ${year}`;
+  }
+  $(document).ready(function() {
     $('#table_galery').DataTable({
         "lengthMenu": [10, 25, 50, 100],
         "pageLength": 10,
         "searching": true
     });
 });
-function get_edit(suratID,) {
+function get_edit(suratID) {
     $.ajax({
         type: "GET",
         url: "{{url('page/surat/get_edit')}}"+"/"+suratID,
@@ -112,6 +127,9 @@ function get_edit(suratID,) {
                 var path = "{{asset('lampiran')}}/"+value.lampiran_surat;
                 $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+value.lampiran_surat+'"></embed>');
                 $('#download').attr('href','{{asset('lampiran')}}/'+value.lampiran_surat);
+                
+                // Simpan data disposisi ke dalam atribut data 'disposisi' pada tombol edit
+                $('.edit').data('disposisi', value.disposisi);
             });
         },
         error: function(response) {
@@ -119,6 +137,7 @@ function get_edit(suratID,) {
         }
     });
 }
+
 $(document).on('click','.view',function() {
     var suratID = $(this).attr('more_id');
     $("#modal_view").modal('show');
@@ -126,5 +145,18 @@ $(document).on('click','.view',function() {
         get_edit(suratID);
     }
 });
+
+$(document).on('click', '.edit', function() {
+    var disposisi = $(this).data('disposisi');
+    $('#disposisi').val(disposisi);
+    $('#modal_edit_disposisi').modal('show');
+});
+
+$(document).ready(function() {
+    $(document).on('click', '.close', function() {
+        $('#modal_edit_disposisi').modal('hide');
+    });
+});
+
 </script>
 @endsection
