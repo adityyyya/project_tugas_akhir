@@ -21,23 +21,30 @@ class Surat extends Model
 		return $data;
 	}
 	public static function getDataSurat($request, $type)
-	{
-		$data = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
-		->leftJoin('users as disposisi','disposisi.id','=','surat_detail.disposisi')
-		->leftJoin('klasifikasi_surat','klasifikasi_surat.id_klasifikasi','=','surat_detail.id_klasifikasi')
-		->leftJoin('status_surat','status_surat.id_status','=','surat_detail.id_status')
-		->where('surat.tipe_surat',$type);
-		if (!empty($request->awal)) {
-			$data->whereBetween('surat.tanggal_terima',[$request->awal,$request->akhir]);
-		}else{
-			$data->where('surat.tanggal_terima',date('Y-m-d'));
-		}
-		// if (Auth::user()->level != 'Admin') {
-		// 	$data->where('surat_detail.disposisi',Auth::user()->id);
-		  // Terapkan pengurutan berdasarkan waktu pembuatan, dimulai dari yang terbaru
-		$data = $data->orderBy('surat.created_at', 'desc')->get();
-		return $data;
-	}
+{
+    $data = Surat::join('surat_detail', 'surat_detail.id_surat', '=', 'surat.id_surat')
+        ->leftJoin('users as disposisi', 'disposisi.id', '=', 'surat_detail.disposisi')
+        ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat_detail.id_klasifikasi')
+        ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat_detail.id_status')
+        ->where('surat.tipe_surat', $type);
+
+    if (!empty($request->awal)) {
+        $data->whereBetween('surat.tanggal_terima', [$request->awal, $request->akhir]);
+    } else {
+        $data->where('surat.tanggal_terima', date('Y-m-d'));
+    }
+
+    // Tambahkan kondisi untuk membatasi surat yang diunggah oleh pengguna yang sedang login
+    if (Auth::user()->level != 'Admin') {
+        $data->where('surat.id_user', Auth::user()->id);
+    }
+  
+    // Terapkan pengurutan berdasarkan waktu pembuatan, dimulai dari yang terbaru
+    $data = $data->orderBy('surat.created_at', 'desc')->get();
+  
+    return $data;
+}
+
 	public static function getEditSurat($id_surat)
 	{
 		$data = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
