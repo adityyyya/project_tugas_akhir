@@ -51,94 +51,81 @@ class SuratController extends Controller
 		}
 	}
 	public function save_surat(Request $request)
-	{
-		try {
-			DB::beginTransaction();
-			$surat = New Surat();
-			$surat -> id_user = Auth::user()->id;
-			$surat -> nomor_surat = $request->nomor_surat;
-			$surat -> tipe_surat = $request->tipe_surat;
-			$surat -> pengirim = $request->pengirim;
-			//$surat -> nomor_agenda = $request->nomor_agenda;
-			$surat -> tanggal_surat = $request->tanggal_surat;
-			$surat -> tanggal_terima = $request->tanggal_terima;
-			$surat -> save();
-			if ($request->tipe_surat == 'Masuk') {
-				$disposisi = $request->disposisi;
-			}else{
-				$disposisi = NULL;
-			}
-			if (!empty($request->file('lampiran'))) {
-				$files = $request->file('lampiran');
-				$foto = $files->getClientOriginalName();
-				$namaFileBaru = uniqid();
-				$namaFileBaru .= $foto;
-				$files->move(\base_path() . "/public/lampiran", $namaFileBaru);
-			}else{
-				$namaFileBaru = NULL;
-			}
-			DB::table('surat_detail')->insert([
-				'id_surat'=>$surat->id_surat,
-				'ringkasan'=>$request->ringkasan,
-				'disposisi'=>$disposisi,
-				'id_klasifikasi' => $request->id_klasifikasi,
-				'id_status' => $request->id_status,
-				'lampiran_surat'=>$namaFileBaru
-			]);
-			DB::commit();
-			return response()->json(['status' => 'true', 'message' => 'Data Surat berhasil ditambahkan !!']);
-		} catch (\Exception $e) {
-			DB::rollBack();
-			Log::error($e);
-			return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
-		}
-	}
+{
+    try {
+        DB::beginTransaction();
+        $surat = new Surat();
+        $surat->id_user = Auth::user()->id;
+        $surat->nomor_surat = $request->nomor_surat;
+        $surat->tipe_surat = $request->tipe_surat;
+        $surat->pengirim = $request->pengirim;
+        $surat->tanggal_surat = $request->tanggal_surat;
+        $surat->tanggal_terima = $request->tanggal_terima;
+        $surat->id_klasifikasi = $request->id_klasifikasi;
+        $surat->id_status = $request->id_status;
+        $surat->ringkasan = $request->ringkasan;
+        $surat->disposisi = ($request->tipe_surat == 'Masuk') ? $request->disposisi : null;
+
+        // Handle lampiran
+        if (!empty($request->file('lampiran'))) {
+            $lampiran = $request->file('lampiran');
+            $namaFileBaru = uniqid() . '.' . $lampiran->getClientOriginalExtension();
+            $lampiran->move(public_path('lampiran'), $namaFileBaru);
+            $surat->lampiran_surat = $namaFileBaru;
+        } else {
+            $surat->lampiran_surat = null;
+        }
+
+        $surat->save();
+        DB::commit();
+        return response()->json(['status' => 'true', 'message' => 'Data Surat berhasil ditambahkan !!']);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error($e);
+        return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
+    }
+}
+
 	public function get_edit($id_surat)
 	{
 		$data = Surat::getEditSurat($id_surat);
 		return response()->json($data);
 	}
 	public function update_surat(Request $request)
-	{
-		try {
-			DB::beginTransaction();
-			$surat = Surat::where('id_surat',$request->id_surat)->first();
-			$surat -> nomor_surat = $request->nomor_surat;
-			$surat -> tipe_surat = $request->tipe_surat;
-			$surat -> pengirim = $request->pengirim;
-			//$surat -> nomor_agenda = $request->nomor_agenda;
-			$surat -> tanggal_surat = $request->tanggal_surat;
-			$surat -> tanggal_terima = $request->tanggal_terima;
-			$surat -> save();
-			if ($request->tipe_surat == 'Masuk') {
-				$disposisi = $request->disposisi;
-			}else{
-				$disposisi = NULL;
-			}
-			if (!empty($request->file('lampiran'))) {
-				$files = $request->file('lampiran');
-				$foto = $files->getClientOriginalName();
-				$namaFileBaru = uniqid();
-				$namaFileBaru .= $foto;
-				$files->move(\base_path() . "/public/lampiran", $namaFileBaru);
-			}else{
-				$namaFileBaru = $request->lampiranLama;
-			}
-			DB::table('surat_detail')->where('id_surat',$request->id_surat)->update([
-				'id_klasifikasi' => $request->id_klasifikasi,
-				'id_status' => $request->id_status,
-				'ringkasan'=>$request->ringkasan,
-				'disposisi'=>$disposisi,
-				'lampiran_surat'=>$namaFileBaru
-			]);
-			DB::commit();
-			return response()->json(['status' => 'true', 'message' => 'Data Surat berhasil diubah !!']);
-		} catch (\Exception $e) {
-			DB::rollBack();
-			Log::error($e);
-			return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
-		}
-	}
+{
+    try {
+        DB::beginTransaction();
+        $surat = Surat::find($request->id_surat);
+        $surat->nomor_surat = $request->nomor_surat;
+        $surat->tipe_surat = $request->tipe_surat;
+        $surat->pengirim = $request->pengirim;
+        $surat->tanggal_surat = $request->tanggal_surat;
+        $surat->tanggal_terima = $request->tanggal_terima;
+        $surat->id_klasifikasi = $request->id_klasifikasi;
+        $surat->id_status = $request->id_status;
+        $surat->ringkasan = $request->ringkasan;
+        $surat->disposisi = ($request->tipe_surat == 'Masuk') ? $request->disposisi : null;
+
+        // Handle lampiran
+        if (!empty($request->file('lampiran'))) {
+            $lampiran = $request->file('lampiran');
+            $namaFileBaru = uniqid() . '.' . $lampiran->getClientOriginalExtension();
+            $lampiran->move(public_path('lampiran'), $namaFileBaru);
+            $surat->lampiran_surat = $namaFileBaru;
+        } else {
+            $surat->lampiran_surat = $request->lampiranLama;
+        }
+
+        $surat->save();
+        DB::commit();
+        return response()->json(['status' => 'true', 'message' => 'Data Surat berhasil diubah !!']);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error($e);
+        return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
+    }
+}
+
 	public function hapus_surat($id_surat)
 	{
 		try {

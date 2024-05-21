@@ -111,32 +111,30 @@
 function get_edit(suratID) {
     $.ajax({
         type: "GET",
-        url: "{{url('page/surat/get_edit')}}"+"/"+suratID,
-        success: function(response) {
-            $.each(response, function(key, value) {
+        url: "{{url('page/surat/get_edit')}}/" + suratID,
+        success: function (response) {
+            $.each(response, function (key, value) {
                 $(".modal-title").html(value.nomor_surat);
                 $(".nomor_surat").html(value.nomor_surat);
                 $("#id_klasifikasi_view").html(value.nama_klasifikasi);
                 $("#id_status_view").html(value.nama_status);
                 $(".pengirim").html(value.pengirim);
-                $(".nomor_agenda").html(value.nomor_agenda);
                 $(".tanggal_surat").html(TanggalIndonesia(value.tanggal_surat));
                 $(".tanggal_terima").html(TanggalIndonesia(value.tanggal_terima));
                 $(".ringkasan").html(value.ringkasan);
-                $("#disposisi_view").html(value.name);
-                var path = "{{asset('lampiran')}}/"+value.lampiran_surat;
-                $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+value.lampiran_surat+'"></embed>');
-                $('#download').attr('href','{{asset('lampiran')}}/'+value.lampiran_surat);
-                
-                // Simpan data disposisi ke dalam atribut data 'disposisi' pada tombol edit
-                $('.edit').data('disposisi', value.disposisi);
+                var path = "{{asset('lampiran')}}/" + value.lampiran_surat;
+                $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/' + value.lampiran_surat + '"></embed>');
+                $('#download').attr('href', '{{asset('lampiran')}}/' + value.lampiran_surat);
+                // Menghapus nomor_agenda dari modal
+                $(".nomor_agenda").parent().remove(); // Menghapus baris yang mengandung nomor_agenda
             });
         },
-        error: function(response) {
+        error: function (response) {
             get_edit(suratID);
         }
     });
 }
+
 
 $(document).on('click','.view',function() {
     var suratID = $(this).attr('more_id');

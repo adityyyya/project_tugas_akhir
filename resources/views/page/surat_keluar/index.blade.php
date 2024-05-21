@@ -45,6 +45,7 @@
                             <th>No. </th>
                             <th>Nomor Surat</th>
                             <th>Penerima</th>
+                            <th>Tanggal Dikirim</th>
                             <th>Tanggal Surat</th>
                             <th>Ringkasan</th>
                             <th>Action</th>
@@ -107,6 +108,13 @@
             name: 'pengirim', 
             render: function (data, type, row) {
                 return data;
+            }  
+        },
+        { 
+            data: 'tanggal_terima', 
+            name: 'tanggal_terima', 
+            render: function (data, type, row) {
+                return TanggalIndonesia(data);
             }  
         },
         { 

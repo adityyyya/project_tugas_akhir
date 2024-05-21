@@ -97,20 +97,21 @@
                     $("#id_klasifikasi_view").html(value.nama_klasifikasi);
                     $("#id_status_view").html(value.nama_status);
                     $(".pengirim").html(value.pengirim);
-                    $(".nomor_agenda").html(value.nomor_agenda);
+                   // $(".nomor_agenda").html(value.nomor_agenda);
                     $(".tanggal_surat").html(TanggalIndonesia(value.tanggal_surat));
                     $(".tanggal_terima").html(TanggalIndonesia(value.tanggal_terima));
                     $(".ringkasan").html(value.ringkasan);
                     var path = "{{asset('lampiran')}}/" + value.lampiran_surat;
                     $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/' + value.lampiran_surat + '"></embed>');
                     $('#download').attr('href', '{{asset('lampiran')}}/' + value.lampiran_surat);
-                });
-            },
-            error: function (response) {
-                get_edit(suratID);
-            }
-        });
-    }
+                    $(".nomor_agenda").parent().remove(); // Menghapus baris yang mengandung nomor_agenda
+            });
+        },
+        error: function (response) {
+            get_edit(suratID);
+        }
+    });
+}
 
     $(document).on('click', '.view', function () {
         var suratID = $(this).attr('more_id');

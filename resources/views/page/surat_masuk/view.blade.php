@@ -20,11 +20,11 @@
                <div class="col-1">:</div>
                <div class="col-8 pengirim"></div>
              </div>
-             <div class="row">
+            <!-- <div class="row">
                <div class="col-3">Nomor Agenda</div>
                <div class="col-1">:</div>
                <div class="col-8 nomor_agenda"></div>
-             </div>
+             </div> -->
              <div class="row">
                <div class="col-3">Tanggal Surat</div>
                <div class="col-1">:</div>
