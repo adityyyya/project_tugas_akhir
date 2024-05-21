@@ -8,7 +8,7 @@
             <form action="" method="POST" id="suratForm" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body row">
-                    <div class="col-sm-12 col-12 col-md-6 col-lg-4">
+                    <div class="col-sm-12 col-12 col-md-6 col-lg-6">
                         <div class="mb-3">
                             <input type="" hidden="" id="id_surat" name="id_surat">
                             <input type="hidden" value="{{$tipe_surat}}" name="tipe_surat" id="tipe_surat">
@@ -17,20 +17,23 @@
                             <span class="error invalid-feedback"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-12 col-md-6 col-lg-4">
+                    <div class="col-sm-12 col-12 col-md-6 col-lg-6">
                         <div class="mb-3">
                             <label for="pengirim" class="form-label">Pengirim <span class="text-danger">*</span></label>
                             <input type="text" required="" class="form-control pengirim" id="pengirim" name="pengirim" value="" />
                             <span class="error invalid-feedback"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-12 col-md-6 col-lg-4">
-                        <div class="mb-3">
-                            <label for="nomor_agenda" class="form-label">Nomor Agenda <span class="text-danger">*</span></label>
-                            <input type="text" required="" class="form-control nomor_agenda" id="nomor_agenda" name="nomor_agenda" value="" />
-                            <span class="error invalid-feedback"></span>
-                        </div>
-                    </div>
+                   <!--
+<div class="col-sm-12 col-12 col-md-6 col-lg-4">
+    <div class="mb-3">
+        <label for="nomor_agenda" class="form-label">Nomor Agenda <span class="text-danger">*</span></label>
+        <input type="text" required="" class="form-control nomor_agenda" id="nomor_agenda" name="nomor_agenda" value="" />
+        <span class="error invalid-feedback"></span>
+    </div>
+</div>
+-->
+ 
                     <div class="col-sm-12 col-12 col-md-6 col-lg-6">
                         <div class="mb-3">
                             <label for="tanggal_surat" class="form-label">Tanggal Surat <span class="text-danger">*</span></label>

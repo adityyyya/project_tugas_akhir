@@ -59,7 +59,7 @@ class SuratController extends Controller
 			$surat -> nomor_surat = $request->nomor_surat;
 			$surat -> tipe_surat = $request->tipe_surat;
 			$surat -> pengirim = $request->pengirim;
-			$surat -> nomor_agenda = $request->nomor_agenda;
+			//$surat -> nomor_agenda = $request->nomor_agenda;
 			$surat -> tanggal_surat = $request->tanggal_surat;
 			$surat -> tanggal_terima = $request->tanggal_terima;
 			$surat -> save();
@@ -106,7 +106,7 @@ class SuratController extends Controller
 			$surat -> nomor_surat = $request->nomor_surat;
 			$surat -> tipe_surat = $request->tipe_surat;
 			$surat -> pengirim = $request->pengirim;
-			$surat -> nomor_agenda = $request->nomor_agenda;
+			//$surat -> nomor_agenda = $request->nomor_agenda;
 			$surat -> tanggal_surat = $request->tanggal_surat;
 			$surat -> tanggal_terima = $request->tanggal_terima;
 			$surat -> save();

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->enum('tipe_surat',['Masuk','Keluar']);
             $table->String('nomor_surat');
             $table->String('pengirim');
-            $table->String('nomor_agenda');
             $table->date('tanggal_surat');
             $table->date('tanggal_terima');
             $table->timestamps();

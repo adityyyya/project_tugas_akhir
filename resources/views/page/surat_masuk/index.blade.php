@@ -291,7 +291,7 @@ function get_edit(suratID, action=null) {
                     $("#id_klasifikasi").val(value.id_klasifikasi).trigger('change');
                     $("#id_status").val(value.id_status).trigger('change');
                     $("#pengirim").val(value.pengirim);
-                    $("#nomor_agenda").val(value.nomor_agenda);
+                    //$("#nomor_agenda").val(value.nomor_agenda);
                     $("#tanggal_surat").val(value.tanggal_surat);
                     $("#tanggal_terima").val(value.tanggal_terima);
                     $("#ringkasan").val(value.ringkasan);
@@ -308,7 +308,7 @@ function get_edit(suratID, action=null) {
                     $("#id_klasifikasi_view").html(value.nama_klasifikasi);
                     $("#id_status_view").html(value.nama_status);
                     $(".pengirim").html(value.pengirim);
-                    $(".nomor_agenda").html(value.nomor_agenda);
+                    //$(".nomor_agenda").html(value.nomor_agenda);
                     $(".tanggal_surat").html(TanggalIndonesia(value.tanggal_surat));
                     $(".tanggal_terima").html(TanggalIndonesia(value.tanggal_terima));
                     $(".ringkasan").html(value.ringkasan);
