@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->String('nip')->nullable();
+            $table->enum('jenis_kelamin',['Laki-Laki','Perempuan'])->default('Laki-Laki');
+            $table->String('telepon')->nullable();
+            $table->String('foto')->nullable();
             $table->string('password');
             $table->enum('level',['Admin','Lurah','Sekretaris','Bendahara','Petugas']);
             $table->enum('status',['A','I'])->default('A');

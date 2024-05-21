@@ -25,6 +25,23 @@ return new class extends Migration
             $table->String('pengirim');
             $table->date('tanggal_surat');
             $table->date('tanggal_terima');
+            $table->unsignedBigInteger('id_klasifikasi')->nullable();
+            $table->foreign('id_klasifikasi')
+            ->references('id_klasifikasi')
+            ->on('klasifikasi_surat')
+            ->onDelete('set null');
+            $table->unsignedBigInteger('id_status')->nullable();
+            $table->foreign('id_status')
+            ->references('id_status')
+            ->on('status_surat')
+            ->onDelete('set null');
+            $table->text('ringkasan');
+            $table->unsignedBigInteger('disposisi')->nullable();
+            $table->foreign('disposisi')
+            ->references('id')
+            ->on('users')
+            ->onDelete('set null');
+            $table->String('lampiran_surat');
             $table->timestamps();
         });
 

@@ -15,17 +15,15 @@ class Surat extends Model
 
 	public static function getAnggota()
 	{
-		$data = User::join('biodata','biodata.id_user','=','users.id')
-		->where('users.level','!=','Admin')
+		$data = User::where('users.level','!=','Admin')
 		->get();
 		return $data;
 	}
 	public static function getDataSurat($request, $type)
 {
-    $data = Surat::join('surat_detail', 'surat_detail.id_surat', '=', 'surat.id_surat')
-        ->leftJoin('users as disposisi', 'disposisi.id', '=', 'surat_detail.disposisi')
-        ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat_detail.id_klasifikasi')
-        ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat_detail.id_status')
+    $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
+        ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
+        ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
         ->where('surat.tipe_surat', $type);
 
     if (!empty($request->awal)) {
@@ -61,10 +59,9 @@ class Surat extends Model
     $userLevel = auth()->user()->level; // Mendapatkan level pengguna yang sedang login
 
     // Jika pengguna memiliki level super admin (contoh: level 1), tidak perlu menerapkan filter berdasarkan ID pengguna
-	$data = Surat::join('surat_detail', 'surat_detail.id_surat', '=', 'surat.id_surat')
-    ->leftJoin('users as disposisi', 'disposisi.id', '=', 'surat_detail.disposisi')
-    ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat_detail.id_klasifikasi')
-    ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat_detail.id_status')
+	$data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
+    ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
+    ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
     ->where('surat.tipe_surat', $type);
 
 if ($type !== 'masuk') {
@@ -86,10 +83,9 @@ return $data;
 		
 	public static function getBukuAgendaSurat($request, $type)
 	{
-		$data = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
-		->leftJoin('users as disposisi','disposisi.id','=','surat_detail.disposisi')
-		->leftJoin('klasifikasi_surat','klasifikasi_surat.id_klasifikasi','=','surat_detail.id_klasifikasi')
-		->leftJoin('status_surat','status_surat.id_status','=','surat_detail.id_status')
+		$data = Surat::leftJoin('users as disposisi','disposisi.id','=','surat.disposisi')
+		->leftJoin('klasifikasi_surat','klasifikasi_surat.id_klasifikasi','=','surat.id_klasifikasi')
+		->leftJoin('status_surat','status_surat.id_status','=','surat.id_status')
 		->where('surat.tipe_surat',$type);
 		if (!empty($request->awal)) {
 			$data->whereBetween('surat.tanggal_terima',[$request->awal,$request->akhir]);
