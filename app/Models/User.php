@@ -63,23 +63,20 @@ class User extends Authenticatable
      */
     public static function getUser()
     {
-        $data = User::join('biodata','biodata.id_user','=','users.id')
-        ->where('users.level','!=','Admin')
+        $data = User::where('users.level','!=','Admin')
         ->get();
         return $data;
     }
     public static function getEditUser($id)
     {
-        $data = User::join('biodata','biodata.id_user','=','users.id')
-        ->where('users.level','!=','Admin')
+        $data = User::where('users.level','!=','Admin')
         ->where('users.id',$id)
         ->get();
         return $data;
     }
     public static function getUserProfil()
     {
-        $data = User::join('biodata','biodata.id_user','=','users.id')
-        ->where('users.id',Auth::user()->id)
+        $data = User::where('users.id',Auth::user()->id)
         ->first();
         return $data;
     }

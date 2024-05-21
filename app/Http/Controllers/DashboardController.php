@@ -17,8 +17,7 @@ class DashboardController extends Controller
 {
 	public function index()
 	{
-		$surat_masuk = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
-		->leftJoin('users','users.id','=','surat_detail.disposisi')
+		$surat_masuk = Surat::leftJoin('users','users.id','=','surat.disposisi')
 		->where('surat.tanggal_terima',date('Y-m-d'))
 		->where('surat.tipe_surat','Masuk');
 		// if (Auth::user()->level != 'Admin') {
@@ -26,13 +25,12 @@ class DashboardController extends Controller
 		// }
 		$surat_masuk = $surat_masuk->count();
 		// ->count();
-		$disposisi = Surat::join('surat_detail','surat_detail.id_surat','=','surat.id_surat')
-		->leftJoin('users','users.id','=','surat_detail.disposisi')
+		$disposisi = Surat::leftJoin('users','users.id','=','surat.disposisi')
 		->where('surat.tipe_surat','Masuk')
 		->where('surat.tanggal_terima',date('Y-m-d'))
-		->where('surat_detail.disposisi','!=',NULL);
+		->where('surat.disposisi','!=',NULL);
 		if (Auth::user()->level != 'Admin') {
-			$disposisi->where('surat_detail.disposisi',Auth::user()->id);
+			$disposisi->where('surat.disposisi',Auth::user()->id);
 		}
 		$disposisi = $disposisi->count();
 		$surat_keluar = Surat::where('tanggal_terima',date('Y-m-d'))

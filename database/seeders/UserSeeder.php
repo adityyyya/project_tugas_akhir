@@ -25,9 +25,6 @@ class UserSeeder extends Seeder
         $user -> password = Hash::make('admin');
         $user -> level = 'Admin';
         $user -> save();
-        DB::table('biodata')->insert([
-            'id_user'=>$user->id
-        ]);
     }
     
 }
