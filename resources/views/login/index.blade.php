@@ -42,13 +42,14 @@
             <div class="col-lg">
               <div class="p-3">
                   <div class="text-center">
-                            @if (session()->has('LoginError'))
-                            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-                                {{ session('LoginError') }}
-                                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
-                            </div>
-                        @endif
-                                                           
+                    @if (session()->has('LoginError'))
+                    <div id="errorMessage" class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                        {{ session('LoginError') }}
+                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif                                                    
                       <img src="{{asset('images/logobanjar.png')}}" width="150px" height="150px" style="margin-bottom: 30px;">
                       <h1 class="h4 text-gray-900 mb-4" style="font-size: 24px;">SISTEM INFORMASI ARSIP KELURAHAN ALALAK TENGAH</h1>
                       <p class="text-gray-700 mb-4">Login ke akun anda sekarang</p>
@@ -56,13 +57,13 @@
                   <form id="loginForm" method="POST" action="{{route('cek_login')}}" onsubmit="return validateForm()">
                     @csrf
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="email">Alamat Email</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input name="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror"
-                            id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." autofocus required
+                            id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Alamat Email" autofocus required
                             value="{{ old('email') }}">
                             @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -82,32 +83,12 @@
                     <div class="form-group">
                         <span id="error-msg" style="color: red;"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-user">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-block btn-user" id="loginButton">
+                      <i class="fas fa-sign-in-alt"></i> Login
+                  </button>
+                                 
                 </form>                                                   
-              </div>
-              <script>
-                function validateForm() {
-                    var email = document.getElementById("exampleInputEmail").value;
-                    var password = document.getElementById("exampleInputPassword").value;
-                    var errorMsg = document.getElementById("error-msg");
-            
-                    if (email.trim() === '') {
-                        errorMsg.textContent = 'Email harus diisi.';
-                        return false;
-                    }
-            
-                    if (password.trim() === '') {
-                        errorMsg.textContent = 'Password harus diisi.';
-                        return false;
-                    }
-            
-                    // Jika email dan password terisi, kosongkan pesan kesalahan
-                    errorMsg.textContent = '';
-                    return true; // Mengembalikan nilai true jika validasi berhasil
-                }
-            </script>                      
+              </div>           
           </div>          
                 </div>
               </div>
@@ -130,7 +111,40 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+  <script>
+    function validateForm() {
+        var email = document.getElementById('exampleInputEmail').value;
+        var password = document.getElementById('exampleInputPassword').value;
+        var errorMsg = document.getElementById('error-msg');
 
+        if (!email && !password) {
+            errorMsg.innerText = "Alamat email dan kata sandi harus diisi.";
+            return false;
+        } else if (!email) {
+            errorMsg.innerText = "Alamat email harus diisi.";
+            return false;
+        } else if (!password) {
+            errorMsg.innerText = "Kata sandi harus diisi.";
+            return false;
+        }
+        return true;
+    }
+
+    document.getElementById('loginButton').addEventListener('click', function() {
+        if (!validateForm()) {
+            return false;
+        }
+    });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var closeButton = document.querySelector('.alert .close');
+      closeButton.addEventListener('click', function () {
+          var errorMessage = this.closest('.alert');
+          errorMessage.remove();
+      });
+  });
+</script>
 </body>
 
 </html>

@@ -56,16 +56,17 @@
 								</div>
 								<div class="col-6">
 									<div class="form-group">
-										<label>NIP <span class="text-danger">*</span></label>
-										<input type="text" required="" value="{{$dt->nip}}" autocomplete="off" class="form-control" id="nip" name="nip">
+										<label>NIP</label>
+										<input type="text" value="{{$dt->nip}}" autocomplete="off" class="form-control" id="nip" name="nip">
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="form-group">
-										<label>Telepon <span class="text-danger">*</span></label>
-										<input type="number" required="" value="{{$dt->telepon}}" autocomplete="off" class="form-control" id="telepon" name="telepon">
+										<label>Telepon</label>
+										<input type="number" value="{{$dt->telepon}}" autocomplete="off" class="form-control" id="telepon" name="telepon">
 									</div>
 								</div>
+								
 								<div class="col-6">
 									<div class="form-group">
 										<label>Jenis Kelamin <span class="text-danger">*</span></label>
@@ -102,7 +103,8 @@
 								</div>
 								<div class="col-lg-3">
 									<button class="btn btn-primary"><i class="fa fa-edit"></i> Ubah</button>
-								</div>
+									<a href="{{ route('dashboard') }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a>
+								</div>								
 							</div>
 						</div>
 					</div>

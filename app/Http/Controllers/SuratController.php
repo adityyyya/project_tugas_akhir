@@ -86,11 +86,17 @@ class SuratController extends Controller
     }
 }
 
-	public function get_edit($id_surat)
-	{
-		$data = Surat::getEditSurat($id_surat);
-		return response()->json($data);
-	}
+public function get_edit($id_surat)
+{
+    $surat = Surat::find($id_surat);
+    if (!$surat) {
+        return response()->json(['message' => 'Surat not found'], 404);
+    }
+
+    $suratArray = $surat->toArray();
+    return response()->json($suratArray);
+}
+
 	public function update_surat(Request $request)
 {
     try {

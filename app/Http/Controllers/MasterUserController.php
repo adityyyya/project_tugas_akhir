@@ -100,6 +100,25 @@ public function update_user(Request $request)
         return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
     }
 }
+public function get_edit($id)
+{
+    try {
+        $user = User::findOrFail($id); // Mengambil data pengguna berdasarkan ID
+
+        // Mengirim data pengguna dalam bentuk JSON
+        return response()->json([
+            'status' => 'true',
+            'data' => $user
+        ]);
+    } catch (\Exception $e) {
+        Log::error($e);
+        return response()->json([
+            'status' => 'false',
+            'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']'
+        ]);
+    }
+}
+
     public function hapus_user($id)
     {
         try {

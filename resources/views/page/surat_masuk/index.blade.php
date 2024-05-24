@@ -291,7 +291,6 @@ function get_edit(suratID, action=null) {
                     $("#id_klasifikasi").val(value.id_klasifikasi).trigger('change');
                     $("#id_status").val(value.id_status).trigger('change');
                     $("#pengirim").val(value.pengirim);
-                    //$("#nomor_agenda").val(value.nomor_agenda);
                     $("#tanggal_surat").val(value.tanggal_surat);
                     $("#tanggal_terima").val(value.tanggal_terima);
                     $("#ringkasan").val(value.ringkasan);
@@ -326,14 +325,51 @@ function get_edit(suratID, action=null) {
 }
 $(document).on('click','.edit',function() {
     var suratID = $(this).attr('more_id');
-    ajaxUrl = "{{route('update.surat')}}";
+    ajaxUrl = "{{ route('get_edit', ['id_surat' => ':suratID']) }}"; // Menggunakan route yang sesuai
+    ajaxUrl = ajaxUrl.replace(':suratID', suratID); // Mengganti placeholder :suratID dengan nilai sebenarnya
     $("#suratForm")[0].reset();
     $("#pageSurat").hide();
     $("#loading").show();
     if (suratID) {
-        get_edit(suratID, null);
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl,
+            success: function(response) {
+                if(response) {
+                    $("#loading").hide();
+                    $("#pageSuratForm").show();
+                    $("#label_header").html('Edit Surat');
+                    $("#required_lampiran").html('');
+                    $("#lampiran").attr('required', false);
+                    $("#id_surat").val(response.id_surat);
+                    $("#nomor_surat").val(response.nomor_surat);
+                    $("#id_klasifikasi").val(response.id_klasifikasi).trigger('change');
+                    $("#id_status").val(response.id_status).trigger('change');
+                    $("#pengirim").val(response.pengirim);
+                    $("#tanggal_surat").val(response.tanggal_surat);
+                    $("#tanggal_terima").val(response.tanggal_terima);
+                    $("#ringkasan").val(response.ringkasan);
+                    $("#disposisi").val(response.disposisi).trigger('change');
+                    $("#lampiranLama").val(response.lampiran_surat);
+                    $('.embed_scan').css('display','block');
+                    var path = "{{ asset('lampiran') }}/"+response.lampiran_surat;
+                    $('.embed_scan').attr('src', path);
+                } else {
+                    // Handle jika data tidak ditemukan
+                    alert('Data surat tidak ditemukan');
+                    $("#loading").hide();
+                    $("#pageSurat").show();
+                }
+            },
+            error: function(response) {
+                alert('Terjadi kesalahan saat mengambil data surat');
+                $("#loading").hide();
+                $("#pageSurat").show();
+            }
+        });
     }
 });
+
 $(document).on('click','.view',function() {
     var suratID = $(this).attr('more_id');
     $("#modal_view").modal('show');

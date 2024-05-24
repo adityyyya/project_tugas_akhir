@@ -47,29 +47,31 @@ class DashboardController extends Controller
 		return view('page.profil.index',compact('dt'));
 	}
 	public function update_my_profil(Request $request)
-	{
-		$user = User::where('id',Auth::user()->id)->first();
-		$user -> name = $request->name;
-		$user -> email = $request->email;
-		if ($request->password != '') {
-			$user -> password = hash::make($request->password);
-		}
-		$user -> save();
-		if (!empty($request->file('foto'))) {
-			$files = $request->file('foto');
-			$foto = $files->getClientOriginalName();
-			$namaFileBaru = uniqid();
-			$namaFileBaru .= $foto;
-			$files->move(\base_path() . "/public/foto", $namaFileBaru);
-		}else{
-			$namaFileBaru = $request->fotoLama;
-		}
-		DB::table('biodata')->where('id_user',Auth::user()->id)->update([
-			'nip'=>$request->nip,
-			'telepon'=>$request->telepon,
-			'jenis_kelamin'=>$request->jenis_kelamin,
-			'foto'=>$namaFileBaru
-		]);
-		return response()->json(['status'=>'true','message'=>'Profil berhasil diperbarui !!']);
-	}
+{
+    $user = User::find(Auth::user()->id);
+    $user->name = $request->name;
+    $user->email = $request->email;
+    
+    if ($request->hasFile('foto')) {
+        $foto = $request->file('foto');
+        $namaFileBaru = uniqid() . '.' . $foto->getClientOriginalExtension();
+        // Pindahkan foto ke direktori yang diinginkan
+        if ($foto->move(public_path('foto'), $namaFileBaru)) {
+            // Simpan nama foto baru ke dalam record user
+            $user->foto = $namaFileBaru;
+        } else {
+            // Jika gagal menyimpan foto, kirim respons error
+            return response()->json(['status' => 'false', 'message' => 'Gagal menyimpan foto.']);
+        }
+    }
+
+    if (!empty($request->password)) {
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->save();
+
+    return response()->json(['status' => 'true', 'message' => 'Profil berhasil diperbarui !!']);
+}
+
 }
