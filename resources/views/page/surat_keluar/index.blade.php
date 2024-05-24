@@ -265,53 +265,49 @@
         });
     });
 });
-  function get_edit(suratID, action=null) {
+function get_edit(suratID, action=null) {
     $.ajax({
-        type: "GET",
-        url: "{{url('page/surat/get_edit')}}"+"/"+suratID,
-        success: function(response) {
-            if (action == null) {
-                $("#loading").hide();
-                $("#pageSuratForm").show();
-                $("#label_header").html('Edit Surat');
-                $("#required_lampiran").html('');
-                $("#lampiran").attr('required',false);
-                $.each(response, function(key, value) {
-                    $("#id_surat").val(value.id_surat);
-                    $("#nomor_surat").val(value.nomor_surat);
-                    $("#id_klasifikasi").val(value.id_klasifikasi).trigger('change');
-                    $("#id_status").val(value.id_status).trigger('change');
-                    $("#pengirim").val(value.pengirim);
-                    //$("#nomor_agenda").val(value.nomor_agenda);
-                    $("#tanggal_surat").val(value.tanggal_surat);
-                    $("#tanggal_terima").val(value.tanggal_terima);
-                    $("#ringkasan").val(value.ringkasan);
-                    $("#lampiranLama").val(value.lampiran_surat);
-                    $('.embed_scan').css('display','block');
-                    var path = "{{asset('lampiran')}}/"+value.lampiran_surat;
-                    $('.embed_scan').attr('src',path);
-                });
-            }else{
-                $.each(response, function(key, value) {
-                    $(".modal-title").html(value.nomor_surat);
-                    $(".nomor_surat").html(value.nomor_surat);
-                    $("#id_klasifikasi_view").html(value.nama_klasifikasi);
-                    $("#id_status_view").html(value.nama_status);
-                    $(".pengirim").html(value.pengirim);
-                    //$(".nomor_agenda").html(value.nomor_agenda);
-                    $(".tanggal_surat").html(TanggalIndonesia(value.tanggal_surat));
-                    $(".tanggal_terima").html(TanggalIndonesia(value.tanggal_terima));
-                    $(".ringkasan").html(value.ringkasan);
-                    var path = "{{asset('lampiran')}}/"+value.lampiran_surat;
-                    $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+value.lampiran_surat+'"></embed>');
-                    $('#download').attr('href','{{asset('lampiran')}}/'+value.lampiran_surat);
-                });
-            }
-        },
-        error: function(response) {
-            get_edit(suratID, action);
+    type: "GET",
+    url: "{{url('page/surat/get_edit')}}"+"/"+suratID,
+    success: function(response) {
+        if (action == null) {
+            $("#loading").hide();
+            $("#pageSuratForm").show();
+            $("#label_header").html('Edit Surat');
+            $("#required_lampiran").html('');
+            $("#lampiran").attr('required',false);
+            $("#id_surat").val(response.id_surat);
+            $("#nomor_surat").val(response.nomor_surat);
+            $("#id_klasifikasi").val(response.id_klasifikasi).trigger('change');
+            $("#id_status").val(response.id_status).trigger('change');
+            $("#pengirim").val(response.pengirim);
+            $("#tanggal_surat").val(response.tanggal_surat);
+            $("#tanggal_terima").val(response.tanggal_terima);
+            $("#ringkasan").val(response.ringkasan);
+            $("#disposisi").val(response.disposisi).trigger('change');
+            $("#lampiranLama").val(response.lampiran_surat);
+            $('.embed_scan').css('display','block');
+            var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
+            $('.embed_scan').attr('src',path);
+        } else {
+            $(".modal-title").html(response.nomor_surat);
+            $(".nomor_surat").html(response.nomor_surat);
+            $("#id_klasifikasi_view").html(response.nama_klasifikasi);
+            $("#id_status_view").html(response.nama_status);
+            $(".pengirim").html(response.pengirim);
+            $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
+            $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
+            $(".ringkasan").html(response.ringkasan);
+            $("#disposisi_view").html(response.disposisi ? response.disposisi.nama : '-'); // Menampilkan nama disposisi jika ada
+            var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
+            $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+response.lampiran_surat+'"></embed>');
+            $('#download').attr('href','{{asset('lampiran')}}/'+response.lampiran_surat);
         }
-    });
+    },
+    error: function(response) {
+        get_edit(suratID, action);
+    }
+});
 }
 $(document).on('click','.edit',function() {
     var suratID = $(this).attr('more_id');

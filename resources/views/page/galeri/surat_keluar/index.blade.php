@@ -87,25 +87,25 @@
     });
 
     function get_edit(suratID) {
-        $.ajax({
-            type: "GET",
-            url: "{{url('page/surat/get_edit')}}/" + suratID,
-            success: function (response) {
-                $.each(response, function (key, value) {
-                    $(".modal-title").html(value.nomor_surat);
-                    $(".nomor_surat").html(value.nomor_surat);
-                    $("#id_klasifikasi_view").html(value.nama_klasifikasi);
-                    $("#id_status_view").html(value.nama_status);
-                    $(".pengirim").html(value.pengirim);
-                   // $(".nomor_agenda").html(value.nomor_agenda);
-                    $(".tanggal_surat").html(TanggalIndonesia(value.tanggal_surat));
-                    $(".tanggal_terima").html(TanggalIndonesia(value.tanggal_terima));
-                    $(".ringkasan").html(value.ringkasan);
-                    var path = "{{asset('lampiran')}}/" + value.lampiran_surat;
-                    $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/' + value.lampiran_surat + '"></embed>');
-                    $('#download').attr('href', '{{asset('lampiran')}}/' + value.lampiran_surat);
-                    $(".nomor_agenda").parent().remove(); // Menghapus baris yang mengandung nomor_agenda
-            });
+    $.ajax({
+        type: "GET",
+        url: "{{ url('page/surat/get_edit') }}/" + suratID,
+        success: function(response) {
+            $(".modal-title").html(response.nomor_surat);
+            $(".nomor_surat").html(response.nomor_surat);
+            $(".modal-title").html(response.nomor_surat);
+            $(".nomor_surat").html(response.nomor_surat);
+            $("#id_klasifikasi_view").html(response.nama_klasifikasi); 
+            $("#id_status_view").html(response.nama_status); 
+            $(".pengirim").html(response.pengirim);
+            $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
+            $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
+            $(".ringkasan").html(response.ringkasan ? response.ringkasan : '-');
+            $(".disposisi").html(response.disposisi ? response.disposisi : '-');
+            var path = "{{ asset('lampiran') }}/" + response.lampiran_surat;
+            $('#lampiran_view').html('<embed class="img img-fluid" src="' + path + '"></embed>');
+            $('#download').attr('href', path);
+            $(".nomor_agenda").parent().remove(); // Menghapus baris yang mengandung nomor_agenda
         },
         error: function (response) {
             get_edit(suratID);

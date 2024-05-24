@@ -88,14 +88,16 @@ class SuratController extends Controller
 
 public function get_edit($id_surat)
 {
-    $surat = Surat::find($id_surat);
-    if (!$surat) {
-        return response()->json(['message' => 'Surat not found'], 404);
-    }
+    $data = Surat::leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
+                 ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
+                 ->leftJoin('users', 'users.id', '=', 'surat.disposisi') // Menggabungkan dengan tabel users
+                 ->select('surat.*', 'klasifikasi_surat.nama_klasifikasi', 'status_surat.nama_status', 'users.name as disposisi_name') // Pilih kolom name dari tabel users
+                 ->find($id_surat);
 
-    $suratArray = $surat->toArray();
-    return response()->json($suratArray);
+    return response()->json($data);
 }
+
+
 
 	public function update_surat(Request $request)
 {
