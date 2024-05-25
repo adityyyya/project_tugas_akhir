@@ -13,21 +13,21 @@ use DataTables;
 class MasterUserController extends Controller
 {
     public function data_user(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = User::all(); // Mengambil semua data pengguna dari tabel users
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($data) {
-                    $button = '<a href="javascript:void(0)" more_id="' . $data->id . '" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> ';
-                    $button .= '<a href="javascript:void(0)" more_id="' . $data->id . '" class="btn delete btn-danger text-white rounded-pill btn-sm"><i class="fa fa-trash"></i></a> ';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-        return view('page.user.index');
+{
+    if ($request->ajax()) {
+        $data = User::where('level', '!=', 'admin')->get(); // Exclude users with level 'admin'
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                $button = '<a href="javascript:void(0)" more_id="' . $data->id . '" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> ';
+                $button .= '<a href="javascript:void(0)" more_id="' . $data->id . '" class="btn delete btn-danger text-white rounded-pill btn-sm"><i class="fa fa-trash"></i></a> ';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
+    return view('page.user.index');
+}
 
     public function save_user(Request $request)
 {

@@ -49,6 +49,7 @@ class Surat extends Model
     $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
         ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
         ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
+        ->select('surat.*', 'klasifikasi_surat.nama_klasifikasi', 'status_surat.nama_status', 'users.name as disposisi_name')
         ->where('surat.id_surat', $id_surat)
         ->first(); // Menggunakan first() untuk mendapatkan satu data saja
 

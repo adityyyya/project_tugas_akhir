@@ -19,7 +19,12 @@
                 <form id="form_edit_disposisi">
                     <div class="form-group">
                         <label for="disposisi">Disposisi</label>
-                        <input type="text" class="form-control" id="disposisi" name="disposisi">
+                        <select class="form-control" id="disposisi" name="disposisi">
+                            <option value="1">Disposisi 1</option>
+                            <option value="2">Disposisi 2</option>
+                            <option value="3">Disposisi 3</option>
+                            <!-- Tambahkan opsi sesuai dengan kebutuhan -->
+                        </select>
                     </div>
                     <!-- Tombol untuk menyimpan perubahan disposisi -->
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -28,6 +33,7 @@
         </div>
     </div>
 </div>
+
 
 
 <div id="pageSurat">
@@ -57,6 +63,7 @@
                             <th>Nomor Surat</th>
                             <th>Pengirim</th>
                             <th>Tanggal Surat</th>
+                            <th>Tanggal Terima</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -67,6 +74,7 @@
                             <td>{{$dt->nomor_surat}}</td>
                             <td>{{$dt->pengirim}}</td>
                             <td>{{$dt->tanggal_surat}}</td>
+                            <td>{{$dt->tanggal_terima}}</td>
                             <td>
                                 <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
                                 <a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> 
@@ -108,32 +116,32 @@
         "searching": true
     });
 });
-function get_edit(suratID) {
+$(document).on('click','.view',function() {
+    var suratID = $(this).attr('more_id');
     $.ajax({
         type: "GET",
         url: "{{ url('page/surat/get_edit') }}/" + suratID,
         success: function(response) {
             $(".modal-title").html(response.nomor_surat);
-            $(".nomor_surat").html(response.nomor_surat);
-            $(".modal-title").html(response.nomor_surat);
-            $(".nomor_surat").html(response.nomor_surat);
-            $("#id_klasifikasi_view").html(response.nama_klasifikasi); 
-            $("#id_status_view").html(response.nama_status); 
-            $(".pengirim").html(response.pengirim);
-            $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
-            $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
-            $(".ringkasan").html(response.ringkasan ? response.ringkasan : '-');
-            $(".disposisi").html(response.disposisi ? response.disposisi : '-');
-            var path = "{{ asset('lampiran') }}/" + response.lampiran_surat;
-            $('#lampiran_view').html('<embed class="img img-fluid" src="' + path + '"></embed>');
-            $('#download').attr('href', path);
-            $(".nomor_agenda").parent().remove(); // Menghapus baris yang mengandung nomor_agenda
+                $(".nomor_surat").html(response.nomor_surat);
+                $("#id_klasifikasi_view").html(response.nama_klasifikasi);
+                $("#id_status_view").html(response.nama_status);
+                $(".pengirim").html(response.pengirim);
+                $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
+                $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
+                $(".ringkasan").html(response.ringkasan);
+                $("#disposisi_view").html(response.disposisi_name ? response.disposisi_name : '-');
+                var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
+                $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+response.lampiran_surat+'"></embed>');
+                $('#download').attr('href','{{asset('lampiran')}}/'+response.lampiran_surat);
         },
-        error: function (response) {
-            get_edit(suratID);
+        error: function(response) {
+            console.log("Error:", response);
         }
     });
-}
+});
+
+
 $(document).on('click','.view',function() {
     var suratID = $(this).attr('more_id');
     $("#modal_view").modal('show');
@@ -147,6 +155,7 @@ $(document).on('click', '.edit', function() {
     $('#disposisi').val(disposisi);
     $('#modal_edit_disposisi').modal('show');
 });
+
 
 $(document).ready(function() {
     $(document).on('click', '.close', function() {

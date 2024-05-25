@@ -307,7 +307,7 @@ function get_edit(suratID, action=null) {
                 $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
                 $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
                 $(".ringkasan").html(response.ringkasan);
-                $("#disposisi_view").html(response.disposisi ? response.disposisi.nama : '-'); // Menampilkan nama disposisi jika ada
+                $("#disposisi_view").html(response.disposisi_name ? response.disposisi_name : '-');
                 var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
                 $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+response.lampiran_surat+'"></embed>');
                 $('#download').attr('href','{{asset('lampiran')}}/'+response.lampiran_surat);

@@ -90,12 +90,14 @@ public function get_edit($id_surat)
 {
     $data = Surat::leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
                  ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
-                 ->leftJoin('users', 'users.id', '=', 'surat.disposisi') // Menggabungkan dengan tabel users
-                 ->select('surat.*', 'klasifikasi_surat.nama_klasifikasi', 'status_surat.nama_status', 'users.name as disposisi_name') // Pilih kolom name dari tabel users
+                 ->leftJoin('users', 'users.id', '=', 'surat.disposisi')
+                 ->select('surat.*', 'klasifikasi_surat.nama_klasifikasi', 'status_surat.nama_status', 'users.name as disposisi_name')
                  ->find($id_surat);
 
     return response()->json($data);
 }
+
+
 
 
 
@@ -197,4 +199,7 @@ public function get_edit($id_surat)
 		$data = Surat::getNotifSurat();
 		return response()->json($data);
 	}
+
+	
 }
+

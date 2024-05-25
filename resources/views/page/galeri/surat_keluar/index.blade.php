@@ -101,7 +101,6 @@
             $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
             $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
             $(".ringkasan").html(response.ringkasan ? response.ringkasan : '-');
-            $(".disposisi").html(response.disposisi ? response.disposisi : '-');
             var path = "{{ asset('lampiran') }}/" + response.lampiran_surat;
             $('#lampiran_view').html('<embed class="img img-fluid" src="' + path + '"></embed>');
             $('#download').attr('href', path);
