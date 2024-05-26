@@ -98,7 +98,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Telepon <span class="text-danger">*</span></label>
+                    <label>Telepon</label>
                     <input type="number" required="" class="form-control" id="telepon" name="telepon">
                 </div>
             </div>
@@ -180,7 +180,7 @@ $("#jenis_kelamin").select2({
     dropdownParent: $("#modal_form")
 });
 $("#level").select2({
-    placeholder: ":. PILIH ROLE/LEVEL .:",
+    placeholder: ":. PILIH JABATAN .:",
     dropdownParent: $("#modal_form")
 });
 $("#status").select2({
