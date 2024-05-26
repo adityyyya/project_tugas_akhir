@@ -20,15 +20,9 @@
                     <div class="form-group">
                         <label for="disposisi">Disposisi</label>
                         <select class="form-control" id="disposisi" name="disposisi">
-<<<<<<< HEAD
-                            <option value="1">Disposisi 1</option>
-                            <option value="2">Disposisi 2</option>
-                            <option value="3">Disposisi 3</option>
-=======
-                            <option value="1">Muhamad Aditya</option>
+                            <option value="1">Muhamad Aditysdhshdghsgdhgda</option>
                             <option value="2">Muhammad Madi</option>
                             <option value="3">Oke</option>
->>>>>>> a9f5aa5 (kode terbaru)
                             <!-- Tambahkan opsi sesuai dengan kebutuhan -->
                         </select>
                     </div>
