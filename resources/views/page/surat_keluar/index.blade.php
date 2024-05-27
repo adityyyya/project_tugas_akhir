@@ -271,37 +271,37 @@ function get_edit(suratID, action=null) {
     url: "{{url('page/surat/get_edit')}}"+"/"+suratID,
     success: function(response) {
         if (action == null) {
-            $("#loading").hide();
-            $("#pageSuratForm").show();
-            $("#label_header").html('Edit Surat');
-            $("#required_lampiran").html('');
-            $("#lampiran").attr('required',false);
-            $("#id_surat").val(response.id_surat);
-            $("#nomor_surat").val(response.nomor_surat);
-            $("#id_klasifikasi").val(response.id_klasifikasi).trigger('change');
-            $("#id_status").val(response.id_status).trigger('change');
-            $("#pengirim").val(response.pengirim);
-            $("#tanggal_surat").val(response.tanggal_surat);
-            $("#tanggal_terima").val(response.tanggal_terima);
-            $("#ringkasan").val(response.ringkasan);
-            $("#disposisi").val(response.disposisi).trigger('change');
-            $("#lampiranLama").val(response.lampiran_surat);
-            $('.embed_scan').css('display','block');
-            var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
-            $('.embed_scan').attr('src',path);
-        } else {
-            $(".modal-title").html(response.nomor_surat);
-            $(".nomor_surat").html(response.nomor_surat);
-            $("#id_klasifikasi_view").html(response.nama_klasifikasi);
-            $("#id_status_view").html(response.nama_status);
-            $(".pengirim").html(response.pengirim);
-            $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
-            $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
-            $(".ringkasan").html(response.ringkasan);
-            $("#disposisi_view").html(response.disposisi ? response.disposisi.nama : '-'); // Menampilkan nama disposisi jika ada
-            var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
-            $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+response.lampiran_surat+'"></embed>');
-            $('#download').attr('href','{{asset('lampiran')}}/'+response.lampiran_surat);
+                $("#loading").hide();
+                $("#pageSuratForm").show();
+                $("#label_header").html('Edit Surat');
+                $("#required_lampiran").html('');
+                $("#lampiran").attr('required',false);
+                $("#id_surat").val(response.id_surat);
+                $("#nomor_surat").val(response.nomor_surat);
+                $("#id_klasifikasi").val(response.id_klasifikasi).trigger('change');
+                $("#id_status").val(response.id_status).trigger('change');
+                $("#pengirim").val(response.pengirim);
+                $("#tanggal_surat").val(response.tanggal_surat);
+                $("#tanggal_terima").val(response.tanggal_terima);
+                $("#ringkasan").val(response.ringkasan);
+               // $("#disposisi").val(response.disposisi).trigger('change');
+                $("#lampiranLama").val(response.lampiran_surat);
+                $('.embed_scan').css('display','block');
+                var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
+                $('.embed_scan').attr('src',path);
+            } else {
+                $(".modal-title").html(response.nomor_surat);
+                $(".nomor_surat").html(response.nomor_surat);
+                $("#id_klasifikasi_view").html(response.nama_klasifikasi);
+                $("#id_status_view").html(response.nama_status);
+                $(".pengirim").html(response.pengirim);
+                $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
+                $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
+                $(".ringkasan").html(response.ringkasan);
+               // $("#disposisi_view").html(response.disposisi_name ? response.disposisi_name : '-');
+                var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
+                $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+response.lampiran_surat+'"></embed>');
+                $('#download').attr('href','{{asset('lampiran')}}/'+response.lampiran_surat);
         }
     },
     error: function(response) {
