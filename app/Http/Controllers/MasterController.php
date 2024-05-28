@@ -39,20 +39,25 @@ class MasterController extends Controller
 		try {
 			DB::beginTransaction();
 			if ($request->id_klasifikasi == '') {
-				$data = New KlasifikasiSurat();
-			}else{
-				$data = KlasifikasiSurat::where('id_klasifikasi',$request->id_klasifikasi)->first();
+				$data = new KlasifikasiSurat();
+			} else {
+				$data = KlasifikasiSurat::where('id_klasifikasi', $request->id_klasifikasi)->first();
 			}
-			$data -> nama_klasifikasi = $request->nama_klasifikasi;
-			$data -> save();
+			$data->nama_klasifikasi = $request->nama_klasifikasi;
+			$data->save();
 			DB::commit();
-			return response()->json(['status' => 'true', 'message' => 'Data Klasifikasi Surat berhasil !!']);
+			if ($request->id_klasifikasi == '') {
+				return response()->json(['status' => 'true', 'message' => 'Data Klasifikasi Surat berhasil ditambahkan !!']);
+			} else {
+				return response()->json(['status' => 'true', 'message' => 'Data Klasifikasi Surat berhasil diubah !!']);
+			}
 		} catch (\Exception $e) {
 			DB::rollBack();
 			Log::error($e);
 			return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
 		}
 	}
+	
 	public function get_edit_klasifikasi($id_klasifikasi)
 	{
 		$data = KlasifikasiSurat::getEdit($id_klasifikasi);
@@ -93,24 +98,28 @@ class MasterController extends Controller
 		return view('page.status_surat.index');
 	}
 	public function save_status(Request $request)
-	{
-		try {
-			DB::beginTransaction();
-			if ($request->id_status == '') {
-				$data = New StatusSurat();
-			}else{
-				$data = StatusSurat::where('id_status',$request->id_status)->first();
-			}
-			$data -> nama_status = $request->nama_status;
-			$data -> save();
-			DB::commit();
-			return response()->json(['status' => 'true', 'message' => 'Data Status Surat berhasil !!']);
-		} catch (\Exception $e) {
-			DB::rollBack();
-			Log::error($e);
-			return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
-		}
-	}
+{
+    try {
+        DB::beginTransaction();
+        if ($request->id_status == '') {
+            $data = new StatusSurat();
+        } else {
+            $data = StatusSurat::where('id_status', $request->id_status)->first();
+        }
+        $data->nama_status = $request->nama_status;
+        $data->save();
+       DB::commit();
+        if ($request->id_status == '') {
+            return response()->json(['status' => 'true', 'message' => 'Data Status Surat berhasil ditambahkan !!']);
+        } else {
+            return response()->json(['status' => 'true', 'message' => 'Data Status Surat berhasil diubah !!']);
+        }
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error($e);
+        return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
+    }
+}
 	public function get_edit_status($id_status)
 	{
 		$data = StatusSurat::getEdit($id_status);
