@@ -60,7 +60,7 @@ Route::middleware(['auth'])->prefix('page')->group(function() {
 	// get notifikasi
 	Route::get('get_notif_surat', [SuratController::class, 'get_notif_surat'])->name('get_notif_surat');
 	// profile
-	Route::get('profil', [DashboardController::class, 'profil'])->name('profil');
-	Route::post('my/profil/update',[DashboardController::class,'update_my_profil'])->name('update_my_profil');
+	Route::get('/profil', [DashboardController::class, 'profil'])->name('profil');
+	Route::post('/update_my_profil', [DashboardController::class, 'update_my_profil'])->name('update_my_profil');
 });
 

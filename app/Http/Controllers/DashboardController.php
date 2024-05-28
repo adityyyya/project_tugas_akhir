@@ -42,36 +42,38 @@ class DashboardController extends Controller
 		return view('page.dashboard.index',compact('surat_masuk','surat_keluar','pengguna','disposisi'));
 	}
 	public function profil()
-	{
-		$dt = User::getUserProfil();
-		return view('page.profil.index',compact('dt'));
-	}
-	public function update_my_profil(Request $request)
-{
-    $user = User::find(Auth::user()->id);
-    $user->name = $request->name;
-    $user->email = $request->email;
-    
-    if ($request->hasFile('foto')) {
-        $foto = $request->file('foto');
-        $namaFileBaru = uniqid() . '.' . $foto->getClientOriginalExtension();
-        // Pindahkan foto ke direktori yang diinginkan
-        if ($foto->move(public_path('foto'), $namaFileBaru)) {
-            // Simpan nama foto baru ke dalam record user
-            $user->foto = $namaFileBaru;
-        } else {
-            // Jika gagal menyimpan foto, kirim respons error
-            return response()->json(['status' => 'false', 'message' => 'Gagal menyimpan foto.']);
+    {
+        $dt = User::find(Auth::user()->id);
+        return view('page.profil.index', compact('dt'));
+    }
+
+    public function update_my_profil(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+		$user->nip = $request->nip;
+		$user->telepon = $request->telepon;
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $namaFileBaru = uniqid() . '.' . $foto->getClientOriginalExtension();
+            // Move photo to the desired directory
+            if ($foto->move(public_path('foto'), $namaFileBaru)) {
+                // Save new photo name to user record
+                $user->foto = $namaFileBaru;
+            } else {
+                // If photo saving fails, send error response
+                return response()->json(['status' => 'false', 'message' => 'Gagal menyimpan foto.']);
+            }
         }
+
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['status' => 'true', 'message' => 'Profil berhasil diperbarui !!']);
     }
-
-    if (!empty($request->password)) {
-        $user->password = Hash::make($request->password);
-    }
-
-    $user->save();
-
-    return response()->json(['status' => 'true', 'message' => 'Profil berhasil diperbarui !!']);
-}
-
 }
