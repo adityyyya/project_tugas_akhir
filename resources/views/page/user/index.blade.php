@@ -34,6 +34,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>NIP</th>
+                            <th>Telepon</th>
                             <th>Jenis Kelamin</th>
                             <th>Jabatan</th>
                             <th>Status</th>
@@ -217,6 +218,13 @@ $(function () {
         { 
             data: 'nip', 
             name: 'nip', 
+            render: function (data, type, row) {
+                return data;
+            }  
+        },
+        { 
+            data: 'telepon', 
+            name: 'telepon', 
             render: function (data, type, row) {
                 return data;
             }  

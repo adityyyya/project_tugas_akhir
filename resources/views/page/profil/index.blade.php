@@ -92,10 +92,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Simpan</button>
-                                    <a href="{{ route('dashboard') }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a>
-                                </div>                                
+                                <div class="col-lg-5">
+									<button type="submit" class="btn btn-primary"> Simpan</button>
+									<button type="button" class="btn btn-danger" id="hapusFotoBtn"><i class="fa fa-trash"></i> Hapus Foto</button>
+									<a href="{{ route('dashboard') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Kembali</a>
+								</div>
+								<input type="hidden" name="hapus_foto" id="hapus_foto" value="0">														   
                             </div>
                         </div>
                     </div>
@@ -108,6 +110,10 @@
 
 @section('scripts')
 <script type="text/javascript">
+$('#hapusFotoBtn').click(function() {
+        $('#hapus_foto').val('1');
+        $('#profilForm').submit();
+    });
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
