@@ -87,7 +87,7 @@
                                         <div class="file-upload-content">
                                             <img class="file-upload-image" src="#" alt="your image" />
                                             <div class="image-title-wrap">
-                                                <button type="button" onclick="removeUpload()" class="remove-image">Hapus <span class="image-title">Uploaded Image</span></button>
+                                                <span class="image-title">Uploaded Image</span></button>
                                             </div>
                                         </div>
                                     </div>
