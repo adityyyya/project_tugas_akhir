@@ -18,39 +18,36 @@ date_default_timezone_set('Asia/Ujung_Pandang');
 class SuratController extends Controller
 {
 	public function data_surat(Request $request, $type)
-	{
-		$anggota = Surat::getAnggota();
-		$klasifikasi = KlasifikasiSurat::getKlasifikasi();
-		$status = StatusSurat::getStatusSurat();
-		if ($type == 'masuk') {
-			$tipe_surat = 'Masuk';
-		}else{
-			$tipe_surat = 'Keluar';
-		}
-		if ($request->ajax()) {
-			$data = Surat::getDataSurat($request, $type);
-			return DataTables::of($data)
-			->addIndexColumn()
-			->addColumn('', function($data) {
-				$a = '';
-				return $a;
-			})
-			->addColumn('action', function($data) {
-				$button = '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> ';
-				$button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a> ';
-				$button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn delete btn-danger text-white rounded-pill btn-sm"><i class="fa fa-trash"></i></a> ';
-				return $button;
-			})
-			->rawColumns(['action'])
-			->make(true);
-		}
-		if ($type == 'masuk') {
-			return view('page.surat_masuk.index',compact('anggota','type','klasifikasi','status','tipe_surat'));
-		}else{
-			return view('page.surat_keluar.index',compact('anggota','type','klasifikasi','status','tipe_surat'));
-		}
-	}
-	public function save_surat(Request $request)
+{
+    $anggota = Surat::getAnggota()->filter(function($anggota) {
+        return $anggota->id !== Auth::id();
+    });
+    $klasifikasi = KlasifikasiSurat::getKlasifikasi();
+    $status = StatusSurat::getStatusSurat();
+    $tipe_surat = ($type == 'masuk') ? 'Masuk' : 'Keluar';
+
+    if ($request->ajax()) {
+        $data = Surat::getDataSurat($request, $type);
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('', function($data) {
+                return '';
+            })
+            ->addColumn('action', function($data) {
+                $button = '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> ';
+                $button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a> ';
+                $button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn delete btn-danger text-white rounded-pill btn-sm"><i class="fa fa-trash"></i></a> ';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    $view = ($type == 'masuk') ? 'page.surat_masuk.index' : 'page.surat_keluar.index';
+    return view($view, compact('anggota', 'type', 'klasifikasi', 'status', 'tipe_surat'));
+}
+
+public function save_surat(Request $request)
 {
     try {
         DB::beginTransaction();
@@ -64,6 +61,11 @@ class SuratController extends Controller
         $surat->id_klasifikasi = $request->id_klasifikasi;
         $surat->id_status = $request->id_status;
         $surat->ringkasan = $request->ringkasan;
+
+        // Handle disposisi
+        if ($request->tipe_surat == 'Masuk' && $request->disposisi == Auth::user()->name) {
+            return response()->json(['status' => 'false', 'message' => 'Anda tidak dapat mendisposisikan surat kepada diri sendiri.']);
+        }
         $surat->disposisi = ($request->tipe_surat == 'Masuk') ? $request->disposisi : null;
 
         // Handle lampiran
@@ -149,6 +151,7 @@ public function get_edit($id_surat)
 			return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
 		}
 	}
+	
 	public function galery_surat($type)
 	{
 		if ($type == 'masuk') {
