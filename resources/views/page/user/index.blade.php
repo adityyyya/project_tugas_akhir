@@ -100,7 +100,7 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>Telepon</label>
-                    <input type="number" required="" class="form-control" id="telepon" name="telepon">
+                    <input type="number" class="form-control" id="telepon" name="telepon">
                 </div>
             </div>
             <div class="col-lg-6">
