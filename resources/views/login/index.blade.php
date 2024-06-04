@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <title>Login</title>
-  <link rel="icon" type="image/png" href="{{asset('images/logobanjar.png')}}">
+  <link rel="icon" type="image/png" href="{{asset('img/logobanjar.png')}}">
   
   <!-- Custom fonts for this template-->
   <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -20,7 +20,7 @@
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
   <style>
     body {
-        background-image: url('/images/banjarmasin.jpg'); 
+        background-image: url('/img/banjarmasin.jpg'); 
         background-size: cover;
         background-position: center;
     }
