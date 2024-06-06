@@ -56,7 +56,7 @@ class Surat extends Model
     return $data;
 }
 
-	public static function getGalerySurat($type)
+public static function getGalerySurat($type)
 {
     $userId = auth()->id(); // Mendapatkan ID pengguna yang sedang login
     $userLevel = auth()->user()->level; // Mendapatkan level pengguna yang sedang login
@@ -65,6 +65,7 @@ class Surat extends Model
     $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
         ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
         ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
+        ->select('surat.*', 'disposisi.name as disposisi_name') // Menambahkan seleksi nama disposisi
         ->where('surat.tipe_surat', $type);
 
     if ($type !== 'masuk') {
@@ -81,7 +82,6 @@ class Surat extends Model
 
     return $data;
 }
-
 
 		
 	public static function getBukuAgendaSurat($request, $type)

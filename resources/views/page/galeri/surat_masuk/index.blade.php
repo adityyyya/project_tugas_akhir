@@ -62,6 +62,7 @@
                             <th>No. </th>
                             <th>Nomor Surat</th>
                             <th>Pengirim</th>
+                            <th>Disposisi</th>
                             <th>Tanggal Surat</th>
                             <th>Tanggal Terima</th>
                             <th>Action</th>
@@ -73,6 +74,7 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$dt->nomor_surat}}</td>
                             <td>{{$dt->pengirim}}</td>
+                            <td>{{$dt->disposisi_name}}</td>
                             <td>{{$dt->tanggal_surat}}</td>
                             <td>{{$dt->tanggal_terima}}</td>
                             <td>
