@@ -174,18 +174,33 @@ public function get_edit($id_surat)
 
 public function editDisposisi(Request $request, $id_surat)
 {
-    $surat = Surat::findOrFail($id_surat);
-    $surat->disposisi = $request->disposisi;
-    $surat->save();
+    try {
+        DB::beginTransaction();
 
-    // Ambil data surat terbaru
-    $surat = Surat::findOrFail($id_surat);
+        $surat = Surat::findOrFail($id_surat);
+        $surat->disposisi = $request->disposisi;
+        $surat->save();
 
-    return response()->json([
-        'message' => 'Disposisi berhasil diubah',
-        'surat' => $surat // Mengirim data surat terbaru ke frontend
-    ]);
+        DB::commit();
+
+        // Ambil data surat terbaru
+        $surat = Surat::findOrFail($id_surat);
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Disposisi berhasil diubah',
+            'surat' => $surat // Mengirim data surat terbaru ke frontend
+        ]);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error($e);
+        return response()->json([
+            'status' => 'false',
+            'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']'
+        ]);
+    }
 }
+
 
 
     

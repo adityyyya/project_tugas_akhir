@@ -303,7 +303,7 @@ function get_edit(suratID, action=null) {
                 var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
                 $('.embed_scan').attr('src',path);
             } else {
-                $(".modal-title").html(response.nomor_surat);
+                $(".modal-title-view").html(response.nomor_surat);
                 $(".nomor_surat").html(response.nomor_surat);
                 $("#id_klasifikasi_view").html(response.nama_klasifikasi);
                 $("#id_status_view").html(response.nama_status);

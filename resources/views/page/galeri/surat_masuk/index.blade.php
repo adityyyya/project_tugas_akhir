@@ -5,11 +5,10 @@
     <span class="fa fa-spinner fa-spin fa-3x"></span>
 </div>
 <!-- Modal untuk edit disposisi -->
-<!-- Modal untuk edit disposisi -->
-<div class="modal fade" id="modal_edit_disposisi" tabindex="-1" aria-labelledby="modal_edit_disposisi" aria-hidden="true">
+<div class="modal fade myModal" id="modal_edit_disposisi" tabindex="-1" aria-labelledby="modal_edit_disposisi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="modal_edit_disposisi_title">Edit Disposisi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -21,12 +20,13 @@
                     @csrf
                     <div class="form-group">
                         <label for="disposisi">Disposisi</label>
-                        <select class="form-control" id="disposisi" name="disposisi">
+                        <select class="form-control select2" id="disposisi" name="disposisi">
                             @foreach($anggota as $agt)
                                 <option value="{{$agt->id}}">{{$agt->name}} ({{$agt->level}})</option>
                             @endforeach
                         </select>
-                    </div>                    
+                    </div>           
+                             
                     <!-- Hidden input untuk menyimpan id surat -->
                     <input type="hidden" id="suratID" name="suratID">
                     <!-- Tombol untuk menyimpan perubahan disposisi -->
@@ -36,7 +36,6 @@
         </div>
     </div>
 </div>
-
 <div id="pageSurat">
     <div id="" class="content-wrapper"  style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
         <div class="container-xxl flex-grow-1 container-p-y">
@@ -125,7 +124,7 @@ $(document).on('click','.view',function() {
         type: "GET",
         url: "{{ url('page/surat/get_edit') }}/" + suratID,
         success: function(response) {
-            $(".modal-title").html(response.nomor_surat);
+            $(".modal-title-view").html(response.nomor_surat);
                 $(".nomor_surat").html(response.nomor_surat);
                 $("#id_klasifikasi_view").html(response.nama_klasifikasi);
                 $("#id_status_view").html(response.nama_status);
@@ -144,6 +143,14 @@ $(document).on('click','.view',function() {
     });
 });
 
+$(document).ready(function() {
+        $('.myModal').on('shown.bs.modal', function () {
+            $(".select2").select2({
+                placeholder: ":. PILIH NAMA .:",
+                width: '100%' // Set lebar Select2 ke 100%
+            });
+        });
+    });
 
 $(document).on('click','.view',function() {
     var suratID = $(this).attr('more_id');
@@ -176,13 +183,12 @@ $(document).on('submit', '#form_edit_disposisi', function(e) {
         },
         success: function(response) {
             $('#modal_edit_disposisi').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sukses',
+                    text: response.message
+                });
             var table = $('#table_galery').DataTable();
-
-            // Temukan baris yang sesuai dan perbarui data
-            // var row = table.row("[data-id_surat='" + suratID + "']");
-            // var rowData = row.data();
-            // rowData.disposisi_name = response.surat.disposisi_name;
-            // row.data(rowData).draw(false); // Gambar ulang baris tanpa mereset paginasi
             window.location.replace("surat_masuk");
         },
         error: function(response) {
