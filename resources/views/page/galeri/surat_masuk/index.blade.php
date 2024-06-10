@@ -179,10 +179,11 @@ $(document).on('submit', '#form_edit_disposisi', function(e) {
             var table = $('#table_galery').DataTable();
 
             // Temukan baris yang sesuai dan perbarui data
-            var row = table.row("[data-id_surat='" + suratID + "']");
-            var rowData = row.data();
-            rowData.disposisi_name = response.surat.disposisi_name;
-            row.data(rowData).draw(false); // Gambar ulang baris tanpa mereset paginasi
+            // var row = table.row("[data-id_surat='" + suratID + "']");
+            // var rowData = row.data();
+            // rowData.disposisi_name = response.surat.disposisi_name;
+            // row.data(rowData).draw(false); // Gambar ulang baris tanpa mereset paginasi
+            window.location.replace("surat_masuk");
         },
         error: function(response) {
             console.log("Error:", response);
