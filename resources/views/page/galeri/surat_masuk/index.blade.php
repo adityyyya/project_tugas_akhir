@@ -185,7 +185,7 @@ $(document).on('submit', '#form_edit_disposisi', function(e) {
             $('#modal_edit_disposisi').modal('hide');
                 Swal.fire({
                     icon: 'success',
-                    title: 'Sukses',
+                    title: 'Success',
                     text: response.message
                 });
             var table = $('#table_galery').DataTable();
