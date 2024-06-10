@@ -54,6 +54,7 @@ Route::middleware(['auth'])->prefix('page')->group(function() {
 	Route::get('user_pengguna/destroy/{id}', [MasterUserController::class, 'hapus_user']);
 	// galery
 	Route::get('galery/surat_{type}', [SuratController::class, 'galery_surat'])->name('galery_surat');
+	Route::post('surat/edit_disposisi/{id_surat}', [SuratController::class, 'editDisposisi'])->name('edit_disposisi');
 	// buku agenda
 	Route::get('buku_agenda/surat_{type}', [SuratController::class, 'buku_agenda'])->name('buku_agenda');
 	Route::get('buku_agenda/surat_{type}/export', [SuratController::class, 'export_buku_agenda'])->name('export_buku_agenda');

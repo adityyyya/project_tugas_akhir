@@ -152,6 +152,11 @@
   $(".new").click(function() {
     ajaxUrl = "{{route('save.surat')}}";
     $("#suratForm")[0].reset();
+    $(".select2").val(null).trigger('change');
+    $("#lampiran").val('');
+    $(".embed_scan").hide();
+    $(".embed_scan").attr('src', '');
+    $("#ringkasan").val('');
     $("#pageSurat").hide();
     $("#loading").show();
     setTimeout(function() {
@@ -159,8 +164,7 @@
         $("#pageSuratForm").show();
         $("#label_header").html('Tambah Baru');
         $("#required_lampiran").html('*');
-        $("#lampiran").attr('required',true);
-        $(".select2").val(null).trigger('change');
+        $("#lampiran").attr('required', true);
     }, 400);
 });
   $("#back").click(function() {

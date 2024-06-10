@@ -115,7 +115,9 @@ aria-labelledby="myModalLabel1" aria-hidden="true">
                     <label>Jabatan <span class="text-danger">*</span></label>
                     <select class="form-control select2" required="" style="width: 100%;" id="level" name="level">
                         <option value="Sekretaris">Sekretaris</option>
-                        <option value="Bendahara">Bendahara</option>
+                        <option value="Kasi Pem - Kemasy">Kasi Pem - Kemasy</option>
+                        <option value="Kasi Ekobag">Kasi Ekobag</option>
+                        <option value="Kasi Trantibum">Kasi Trantibum</option>
                         <option value="Lurah">Lurah</option>
                         <option value="Petugas">Petugas</option>
                     </select>
@@ -242,14 +244,20 @@ $(function () {
             render: function (data, type, row) {
                 if (data == 'Sekretaris') {
                     return '<span class="badge bg-info text-white">'+data+'</span>';
-                }else if(data == 'Bendahara'){
+                } else if (data == 'Kasi Pem - Kemasy') {
+                    return '<span class="badge bg-warning text-white">'+data+'</span>';
+                } else if (data == 'Kasi Ekobag') {
                     return '<span class="badge bg-success text-white">'+data+'</span>';
-                }else if(data == 'Lurah'){
+                } else if (data == 'Kasi Trantibum') {
+                    return '<span class="badge bg-danger text-white">'+data+'</span>';
+                } else if (data == 'Lurah') {
                     return '<span class="badge bg-primary text-white">'+data+'</span>';
-                }else{
+                } else if (data == 'Petugas') {
                     return '<span class="badge bg-secondary text-white">'+data+'</span>';
+                } else {
+                    return '<span class="badge bg-dark text-white">'+data+'</span>';
                 }
-            }  
+            }
         },
         { 
             data: 'status', 

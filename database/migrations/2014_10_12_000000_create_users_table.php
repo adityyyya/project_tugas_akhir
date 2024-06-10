@@ -22,7 +22,7 @@ return new class extends Migration
             $table->String('telepon')->nullable();
             $table->String('foto')->nullable();
             $table->string('password');
-            $table->enum('level',['Admin','Lurah','Sekretaris','Bendahara','Petugas']);
+            $table->enum('level',['Admin','Lurah','Sekretaris','Kasi Pem - Kemasy', 'Kasi Ekobag', 'Kasi Trantibum','Petugas']);
             $table->enum('status',['A','I'])->default('A');
             $table->timestamps();
         });

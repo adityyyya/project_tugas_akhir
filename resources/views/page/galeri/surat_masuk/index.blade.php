@@ -5,6 +5,7 @@
     <span class="fa fa-spinner fa-spin fa-3x"></span>
 </div>
 <!-- Modal untuk edit disposisi -->
+<!-- Modal untuk edit disposisi -->
 <div class="modal fade" id="modal_edit_disposisi" tabindex="-1" aria-labelledby="modal_edit_disposisi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -16,25 +17,25 @@
             </div>
             <div class="modal-body">
                 <!-- Form untuk mengedit disposisi -->
-                <form id="form_edit_disposisi">
+                <form id="form_edit_disposisi" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="disposisi">Disposisi</label>
                         <select class="form-control" id="disposisi" name="disposisi">
-                            <option value="1">Muhamad Aditya</option>
-                            <option value="2">Muhammad Madi</option>
-                            <option value="3">Oke</option>
-                            <!-- Tambahkan opsi sesuai dengan kebutuhan -->
+                            @foreach($anggota as $agt)
+                                <option value="{{$agt->id}}">{{$agt->name}} ({{$agt->level}})</option>
+                            @endforeach
                         </select>
-                    </div>
+                    </div>                    
+                    <!-- Hidden input untuk menyimpan id surat -->
+                    <input type="hidden" id="suratID" name="suratID">
                     <!-- Tombol untuk menyimpan perubahan disposisi -->
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn_submit">Simpan</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <div id="pageSurat">
     <div id="" class="content-wrapper"  style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
@@ -70,20 +71,20 @@
                     </thead>
                     <tbody>
                         @foreach($data->reverse() as $dt)
-                        <tr>
+                        <tr data-id_surat="{{$dt->id_surat}}">
                             <td>{{$loop->iteration}}</td>
                             <td>{{$dt->nomor_surat}}</td>
                             <td>{{$dt->pengirim}}</td>
-                            <td>{{$dt->disposisi_name}}</td>
+                            <td class="disposisi_name">{{$dt->disposisi_name}}</td>
                             <td>{{$dt->tanggal_surat}}</td>
                             <td>{{$dt->tanggal_terima}}</td>
                             <td>
                                 <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>
-                                <a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> 
+                                <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" data-disposisi="{{$dt->disposisi}}" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a>      
                             </td>
                         </tr>
                         @endforeach
-                    </tbody>        
+                    </tbody>                        
                 </table>
             </div> 
         </div>
@@ -154,10 +155,41 @@ $(document).on('click','.view',function() {
 
 $(document).on('click', '.edit', function() {
     var disposisi = $(this).data('disposisi');
+    var suratID = $(this).attr('more_id');
     $('#disposisi').val(disposisi);
+    $('#suratID').val(suratID); // Menambahkan id surat ke hidden input
     $('#modal_edit_disposisi').modal('show');
 });
 
+
+$(document).on('submit', '#form_edit_disposisi', function(e) {
+    e.preventDefault();
+    var disposisi = $('#disposisi').val();
+    var suratID = $('#suratID').val();
+
+    $.ajax({
+        type: "POST",
+        url: "{{ url('page/surat/edit_disposisi') }}/" + suratID,
+        data: {
+            _token: '{{ csrf_token() }}',
+            disposisi: disposisi
+        },
+        success: function(response) {
+            $('#modal_edit_disposisi').modal('hide');
+            var table = $('#table_galery').DataTable();
+
+            // Temukan baris yang sesuai dan perbarui data
+            var row = table.row("[data-id_surat='" + suratID + "']");
+            var rowData = row.data();
+            rowData.disposisi_name = response.surat.disposisi_name;
+            row.data(rowData).draw(false); // Gambar ulang baris tanpa mereset paginasi
+        },
+        error: function(response) {
+            console.log("Error:", response);
+            // Tambahkan logika untuk memberi umpan balik kepada pengguna jika diperlukan
+        }
+    });
+});
 
 $(document).ready(function() {
     $(document).on('click', '.close', function() {
@@ -166,4 +198,5 @@ $(document).ready(function() {
 });
 
 </script>
+
 @endsection

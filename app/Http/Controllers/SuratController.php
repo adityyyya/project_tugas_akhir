@@ -17,7 +17,7 @@ date_default_timezone_set('Asia/Ujung_Pandang');
 
 class SuratController extends Controller
 {
-	public function data_surat(Request $request, $type)
+    public function data_surat(Request $request, $type)
 {
     $anggota = Surat::getAnggota()->filter(function($anggota) {
         return $anggota->id !== Auth::id();
@@ -34,9 +34,11 @@ class SuratController extends Controller
                 return '';
             })
             ->addColumn('action', function($data) {
-                $button = '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> ';
-                $button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a> ';
-                $button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn delete btn-danger text-white rounded-pill btn-sm"><i class="fa fa-trash"></i></a> ';
+                $button = '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a> ';
+                if ($data->id_user === Auth::id() || Auth::user()->level === 'Admin') {
+                    $button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn edit btn-success text-white rounded-pill btn-sm"><i class="fa fa-edit"></i></a> ';
+                    $button .= '<a href="javascript:void(0)" more_id="'.$data->id_surat.'" class="btn delete btn-danger text-white rounded-pill btn-sm"><i class="fa fa-trash"></i></a> ';
+                }
                 return $button;
             })
             ->rawColumns(['action'])
@@ -47,47 +49,48 @@ class SuratController extends Controller
     return view($view, compact('anggota', 'type', 'klasifikasi', 'status', 'tipe_surat'));
 }
 
-public function save_surat(Request $request)
-{
-    try {
-        DB::beginTransaction();
-        $surat = new Surat();
-        $surat->id_user = Auth::user()->id;
-        $surat->nomor_surat = $request->nomor_surat;
-        $surat->tipe_surat = $request->tipe_surat;
-        $surat->pengirim = $request->pengirim;
-        $surat->tanggal_surat = $request->tanggal_surat;
-        $surat->tanggal_terima = $request->tanggal_terima;
-        $surat->id_klasifikasi = $request->id_klasifikasi;
-        $surat->id_status = $request->id_status;
-        $surat->ringkasan = $request->ringkasan;
 
-        // Handle disposisi
-        if ($request->tipe_surat == 'Masuk' && $request->disposisi == Auth::user()->name) {
-            return response()->json(['status' => 'false', 'message' => 'Anda tidak dapat mendisposisikan surat kepada diri sendiri.']);
+    public function save_surat(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $surat = new Surat();
+            $surat->id_user = Auth::user()->id;
+            $surat->nomor_surat = $request->nomor_surat;
+            $surat->tipe_surat = $request->tipe_surat;
+            $surat->pengirim = $request->pengirim;
+            $surat->tanggal_surat = $request->tanggal_surat;
+            $surat->tanggal_terima = $request->tanggal_terima;
+            $surat->id_klasifikasi = $request->id_klasifikasi;
+            $surat->id_status = $request->id_status;
+            $surat->ringkasan = $request->ringkasan;
+    
+            // Handle disposisi
+            if ($request->tipe_surat == 'Masuk' && $request->disposisi == Auth::user()->name) {
+                return response()->json(['status' => 'false', 'message' => 'Anda tidak dapat mendisposisikan surat kepada diri sendiri.']);
+            }
+            $surat->disposisi = ($request->tipe_surat == 'Masuk') ? $request->disposisi : null;
+    
+            // Handle lampiran
+            if (!empty($request->file('lampiran'))) {
+                $lampiran = $request->file('lampiran');
+                $namaFileBaru = uniqid() . '.' . $lampiran->getClientOriginalExtension();
+                $lampiran->move(public_path('lampiran'), $namaFileBaru);
+                $surat->lampiran_surat = $namaFileBaru;
+            } else {
+                $surat->lampiran_surat = null;
+            }
+    
+            $surat->save();
+            DB::commit();
+            return response()->json(['status' => 'true', 'message' => 'Data Surat berhasil ditambahkan !!']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
         }
-        $surat->disposisi = ($request->tipe_surat == 'Masuk') ? $request->disposisi : null;
-
-        // Handle lampiran
-        if (!empty($request->file('lampiran'))) {
-            $lampiran = $request->file('lampiran');
-            $namaFileBaru = uniqid() . '.' . $lampiran->getClientOriginalExtension();
-            $lampiran->move(public_path('lampiran'), $namaFileBaru);
-            $surat->lampiran_surat = $namaFileBaru;
-        } else {
-            $surat->lampiran_surat = null;
-        }
-
-        $surat->save();
-        DB::commit();
-        return response()->json(['status' => 'true', 'message' => 'Data Surat berhasil ditambahkan !!']);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error($e);
-        return response()->json(['status' => 'false', 'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']']);
     }
-}
-
+    
 public function get_edit($id_surat)
 {
     $data = Surat::leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
@@ -98,11 +101,6 @@ public function get_edit($id_surat)
 
     return response()->json($data);
 }
-
-
-
-
-
 	public function update_surat(Request $request)
 {
     try {
@@ -152,21 +150,45 @@ public function get_edit($id_surat)
 		}
 	}
 	
-	public function galery_surat($type)
-	{
-		if ($type == 'masuk') {
-			$tipe_surat = 'Masuk';
-		}else{
-			$tipe_surat = 'Keluar';
-		}
-		$data = Surat::getGalerySurat($type);
-		if ($type == 'masuk') {
-			$view = 'page.galeri.surat_masuk.index';
-		}else{
-			$view = 'page.galeri.surat_keluar.index';
-		}
-		return view($view,compact('data','tipe_surat'));
-	}
+    public function galery_surat($type)
+{
+    if ($type == 'masuk') {
+        $tipe_surat = 'Masuk';
+    } else {
+        $tipe_surat = 'Keluar';
+    }
+    $data = Surat::getGalerySurat($type);
+    
+    $anggota = Surat::getAnggota()->filter(function($anggota) {
+        return $anggota->id !== Auth::id();
+    });
+
+    if ($type == 'masuk') {
+        $view = 'page.galeri.surat_masuk.index';
+    } else {
+        $view = 'page.galeri.surat_keluar.index';
+    }
+
+    return view($view, compact('data', 'tipe_surat', 'anggota'));
+}
+
+public function editDisposisi(Request $request, $id_surat)
+{
+    $surat = Surat::findOrFail($id_surat);
+    $surat->disposisi = $request->disposisi;
+    $surat->save();
+
+    // Ambil data surat terbaru
+    $surat = Surat::findOrFail($id_surat);
+
+    return response()->json([
+        'message' => 'Disposisi berhasil diubah',
+        'surat' => $surat // Mengirim data surat terbaru ke frontend
+    ]);
+}
+
+
+    
 	public function buku_agenda(Request $request, $type)
 	{
 		if ($type == 'masuk') {

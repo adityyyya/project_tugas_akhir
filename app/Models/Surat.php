@@ -32,17 +32,12 @@ class Surat extends Model
             $data->where('surat.tanggal_terima', date('Y-m-d'));
         }
     
-        // Tambahkan kondisi untuk membatasi surat yang diunggah oleh pengguna yang sedang login
-        if (Auth::user()->level != 'Admin') {
-            $data->where('surat.id_user', Auth::user()->id);
-        }
-      
         // Terapkan pengurutan berdasarkan waktu pembuatan, dimulai dari yang terbaru
         $data = $data->orderBy('surat.created_at', 'desc')->get();
       
         return $data;
     }
-    
+        
 
 	public static function getEditSurat($id_surat)
 {

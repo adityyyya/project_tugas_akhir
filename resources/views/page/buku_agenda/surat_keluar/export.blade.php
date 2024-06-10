@@ -72,7 +72,7 @@
     <tr style="background: #eee;">
       <th style="font-size: 12px;">No. </th>
       <th style="font-size: 12px;">Nomor Surat</th>
-      <th style="font-size: 12px;">Pengirim</th>
+      <th style="font-size: 12px;">Penerima</th>
       <th style="font-size: 12px; width:100px;">Tanggal Surat</th>
       <th style="font-size: 12px; width:100px;">Tanggal Terima</th>
       <th style="font-size: 12px;">Keterangan</th>
