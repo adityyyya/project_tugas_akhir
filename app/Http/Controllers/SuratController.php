@@ -181,6 +181,12 @@ public function editDisposisi(Request $request, $id_surat)
         $surat->disposisi = $request->disposisi;
         $surat->save();
 
+        // Mengubah status notifikasi jika disposisi berubah ke pengguna lain
+        if ($surat->disposisi != Auth::user()->id) {
+            $surat->notifikasi = 'TIDAK'; // Sesuaikan dengan nilai yang sesuai
+            $surat->save();
+        }
+
         DB::commit();
 
         // Ambil data surat terbaru
@@ -199,11 +205,7 @@ public function editDisposisi(Request $request, $id_surat)
             'message' => 'Permintaan Data terjadi kesalahan !! [' . $e->getMessage() . ']'
         ]);
     }
-}
-
-
-
-    
+}   
 	public function buku_agenda(Request $request, $type)
 	{
 		if ($type == 'masuk') {
@@ -239,7 +241,15 @@ public function editDisposisi(Request $request, $id_surat)
 		$data = Surat::getNotifSurat();
 		return response()->json($data);
 	}
-
+    public function updateNotif($id)
+    {
+        $surat = Surat::findOrFail($id);
+        $surat->notifikasi = 'YA';
+        $surat->save();
+    
+        return response()->json(['success' => true]);
+    }
+    
 	
 }
 

@@ -176,28 +176,58 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         }
     }
     function read() {
-       $.ajax({
+    $.ajax({
         type: "GET",
         url: "{{route('get_notif_surat')}}",
         success: function(response) {
             var html = "";
-            if (response.length > 3) {
-                $("#count_notif_message").text('3+');
-            }else{
-                $("#count_notif_message").text(response.length);
-            }
+            var countNotif = 0; // Menghitung jumlah notifikasi yang belum dilihat
             for (let x = 0; response.length > x; x++) {
-              html += "<a class='dropdown-item d-flex align-items-center' href='#'><div class='dropdown-list-image mr-3'><img class='rounded-circle' src='{{ asset('img/undraw_profile_1.svg') }}' alt='...''><div class='status-indicator bg-success'></div></div><div class='font-weight-bold'><div class='text-truncate'>";
-              html += 'Pengirim: '+response[x].pengirim;
-              html += "</div><div class='small text-gray-500'>"+response[x].ringkasan+" · "+waktuYangLalu(response[x].created_at)+"</div></div></a>";
-          }
-          $("#content_notif_message").html(html);
-      },
-      error: function(response) {
-          read();
-      }
-  });
-   }
+                if (response[x].notifikasi !== 'YA') {
+                    countNotif++;
+                    if (countNotif <= 3) {
+                        html += "<a class='dropdown-item d-flex align-items-center' href='#'><div class='dropdown-list-image mr-3'><img class='rounded-circle' src='{{ asset('img/undraw_profile_1.svg') }}' alt='...''><div class='status-indicator bg-success'></div></div><div class='font-weight-bold'><div class='text-truncate'>";
+                        html += 'Pengirim: ' + response[x].pengirim;
+                        html += "</div><div class='small text-gray-500'>" + response[x].ringkasan + " · " + waktuYangLalu(response[x].created_at) + "</div></div></a>";
+                    }
+                }
+            }
+            $("#count_notif_message").text(countNotif > 3 ? '3+' : countNotif);
+            $("#content_notif_message").html(html);
+        },
+        error: function(response) {
+            read();
+        }
+    });
+
+    // Update notifikasi menjadi 'YA' ketika tombol view diklik
+    $(document).on('click', '.view', function() {
+        var suratID = $(this).attr('more_id');
+        $.ajax({
+            type: "GET",
+            url: "{{ url('page/surat/get_edit') }}/" + suratID,
+            success: function(response) {
+                // Ubah tampilan modal seperti yang Anda butuhkan
+                // ...
+
+                // Ubah status notifikasi menjadi 'YA'
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('update_notif_surat', ':id') }}".replace(':id', suratID),
+                    success: function(response) {
+                        console.log("Notifikasi diupdate");
+                    },
+                    error: function(response) {
+                        console.log("Error updating notification:", response);
+                    }
+                });
+            },
+            error: function(response) {
+                console.log("Error:", response);
+            }
+        });
+    });
+}
    $(document).ready(function() {
       setInterval(function(){
         read()

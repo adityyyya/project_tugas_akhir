@@ -60,6 +60,7 @@ Route::middleware(['auth'])->prefix('page')->group(function() {
 	Route::get('buku_agenda/surat_{type}/export', [SuratController::class, 'export_buku_agenda'])->name('export_buku_agenda');
 	// get notifikasi
 	Route::get('get_notif_surat', [SuratController::class, 'get_notif_surat'])->name('get_notif_surat');
+	Route::get('update_notif_surat/{id}', [SuratController::class, 'updateNotif'])->name('update_notif_surat');
 	// profile
 	Route::get('/profil', [DashboardController::class, 'profil'])->name('profil');
 	Route::post('/update_my_profil', [DashboardController::class, 'update_my_profil'])->name('update_my_profil');

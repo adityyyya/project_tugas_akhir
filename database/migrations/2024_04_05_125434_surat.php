@@ -36,6 +36,7 @@ return new class extends Migration
             ->on('status_surat')
             ->onDelete('set null');
             $table->text('ringkasan');
+            $table->enum('notifikasi', ['YA', 'TIDAK'])->default('TIDAK');
             $table->unsignedBigInteger('disposisi')->nullable();
             $table->foreign('disposisi')
             ->references('id')

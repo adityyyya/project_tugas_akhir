@@ -94,7 +94,7 @@ public static function getGalerySurat($type)
 		$data = $data->get();
 		return $data;
 	}
-	public static function getNotifSurat()
+    public static function getNotifSurat()
 {
     $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
         ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
@@ -105,14 +105,16 @@ public static function getGalerySurat($type)
             \DB::RAW('surat.created_at as created_at')
         )
         ->where('surat.tipe_surat', 'Masuk')
-        ->where('surat.tanggal_terima', date('Y-m-d'))
         ->where('surat.disposisi', '!=', NULL)
         ->where('surat.disposisi', Auth::user()->id)
-        ->orderBy('surat.created_at', 'desc') // Urutkan berdasarkan waktu pembuatan, dimulai dari yang terbaru
+        ->where('surat.notifikasi', '!=', 'YA') // Hanya ambil notifikasi yang belum dilihat
+        ->orderBy('surat.created_at', 'desc')
         ->get();
 
     return $data;
 }
+
+    
 
 
 }

@@ -118,30 +118,53 @@
         "searching": true
     });
 });
-$(document).on('click','.view',function() {
+$(document).on('click', '.view', function() {
     var suratID = $(this).attr('more_id');
     $.ajax({
         type: "GET",
         url: "{{ url('page/surat/get_edit') }}/" + suratID,
         success: function(response) {
-            $(".modal-title-view").html(response.nomor_surat);
-                $(".nomor_surat").html(response.nomor_surat);
-                $("#id_klasifikasi_view").html(response.nama_klasifikasi);
-                $("#id_status_view").html(response.nama_status);
-                $(".pengirim").html(response.pengirim);
-                $(".tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
-                $(".tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
-                $(".ringkasan").html(response.ringkasan);
-                $("#disposisi_view").html(response.disposisi_name ? response.disposisi_name : '-');
-                var path = "{{asset('lampiran')}}/"+response.lampiran_surat;
-                $('#lampiran_view').html('<embed class="img img-fluid" src="{{asset('lampiran')}}/'+response.lampiran_surat+'"></embed>');
-                $('#download').attr('href','{{asset('lampiran')}}/'+response.lampiran_surat);
+            $("#modal_view .modal-title-view").html(response.nomor_surat);
+            $("#modal_view .nomor_surat").html(response.nomor_surat);
+            $("#modal_view #id_klasifikasi_view").html(response.nama_klasifikasi);
+            $("#modal_view #id_status_view").html(response.nama_status);
+            $("#modal_view .pengirim").html(response.pengirim);
+            $("#modal_view .tanggal_surat").html(TanggalIndonesia(response.tanggal_surat));
+            $("#modal_view .tanggal_terima").html(TanggalIndonesia(response.tanggal_terima));
+            $("#modal_view .ringkasan").html(response.ringkasan);
+            $("#modal_view #disposisi_view").html(response.disposisi_name ? response.disposisi_name : '-');
+            var path = "{{ asset('lampiran') }}/" + response.lampiran_surat;
+            $('#modal_view #lampiran_view').html('<embed class="img img-fluid" src="' + path + '"></embed>');
+            $('#modal_view #download').attr('href', path);
+
+            // Munculkan modal
+            $("#modal_view").modal("show");
+
+            // Mengurangi angka notifikasi
+            var countNotif = parseInt($("#count_notif_message").text());
+            if (countNotif > 0) {
+                countNotif--;
+                $("#count_notif_message").text(countNotif > 3 ? '3+' : countNotif);
+
+                // Mengirim permintaan ke server untuk mengubah status notifikasi
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('update_notif_surat', ':id') }}".replace(':id', suratID),
+                    success: function(response) {
+                        console.log("Notifikasi diupdate");
+                    },
+                    error: function(response) {
+                        console.log("Error updating notification:", response);
+                    }
+                });
+            }
         },
         error: function(response) {
             console.log("Error:", response);
         }
     });
 });
+
 
 $(document).ready(function() {
         $('.myModal').on('shown.bs.modal', function () {
@@ -152,13 +175,39 @@ $(document).ready(function() {
         });
     });
 
-$(document).on('click','.view',function() {
+    $(document).on('click', '.view', function() {
     var suratID = $(this).attr('more_id');
-    $("#modal_view").modal('show');
-    if (suratID) {
-        get_edit(suratID);
-    }
+    $.ajax({
+        type: "GET",
+        url: "{{ url('page/surat/get_edit') }}/" + suratID,
+        success: function(response) {
+            // Mengurangi angka notifikasi hanya jika belum diubah menjadi "YA"
+            if (response.notifikasi !== 'YA') {
+                var countNotif = parseInt($("#count_notif_message").text());
+                countNotif = Math.max(0, countNotif - 1);
+                $("#count_notif_message").text(countNotif > 3 ? '3+' : countNotif);
+                // Mengirim permintaan ke server untuk mengubah status notifikasi
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('update_notif_surat', ':id') }}".replace(':id', suratID),
+                    success: function(response) {
+                        console.log("Notifikasi diupdate");
+                    },
+                    error: function(response) {
+                        console.log("Error updating notification:", response);
+                        // Jika terjadi error, kembalikan angka notifikasi ke nilai sebelumnya
+                        $("#count_notif_message").text(countNotif > 3 ? '3+' : countNotif + 1);
+                    }
+                });
+            }
+        },
+        error: function(response) {
+            console.log("Error:", response);
+        }
+    });
 });
+
+
 
 $(document).on('click', '.edit', function() {
     var disposisi = $(this).data('disposisi');
