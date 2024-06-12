@@ -32,7 +32,7 @@ class LoginController extends Controller
             session(['userId' => $userId]); // Menyimpan ID pengguna dalam sesi
 
             // Jika admin, arahkan ke halaman dashboard
-            return redirect(route('dashboard'))->with('success', 'Login successful!');
+            return redirect(route('dashboard'))->with('welcome', true);
         } else {
             // Jika login gagal, tampilkan pesan kesalahan sesuai kondisi
             $user = User::where('email', $request->email)->first();

@@ -101,4 +101,26 @@
 
 
 @endsection
-
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    @if(session('welcome'))
+    Swal.fire({
+        position: 'top',
+        title: 'Selamat Datang',
+        html: '<p>{{ Auth::user()->name }}</p>',
+        icon: null, // Menghilangkan ikon
+        showConfirmButton: true,
+        confirmButtonText: 'OK',
+        customClass: {
+            title: 'swal2-title-custom'
+        }
+    });
+    @endif
+</script>
+<style>
+    .swal2-title-custom {
+        margin-bottom: 0; /* Mengurangi jarak antara judul dan konten */
+    }
+</style>
+@endsection
