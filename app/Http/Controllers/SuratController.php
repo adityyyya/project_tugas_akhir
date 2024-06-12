@@ -244,11 +244,18 @@ public function editDisposisi(Request $request, $id_surat)
     public function updateNotif($id)
     {
         $surat = Surat::findOrFail($id);
-        $surat->notifikasi = 'YA';
-        $surat->save();
-    
-        return response()->json(['success' => true]);
+        
+        // Periksa apakah pengguna adalah penerima disposisi
+        if ($surat->disposisi == Auth::user()->id) {
+            $surat->notifikasi = 'YA';
+            $surat->save();
+        
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
+        
     
 	
 }

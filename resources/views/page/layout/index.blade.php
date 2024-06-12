@@ -192,25 +192,27 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     }
                 }
             }
-            $("#count_notif_message").text(countNotif > 3 ? '3+' : countNotif);
+            $("#count_notif_message").text(countNotif > 99 ? '99+' : countNotif);
             $("#content_notif_message").html(html);
         },
         error: function(response) {
             read();
         }
     });
+}
 
-    // Update notifikasi menjadi 'YA' ketika tombol view diklik
-    $(document).on('click', '.view', function() {
-        var suratID = $(this).attr('more_id');
-        $.ajax({
-            type: "GET",
-            url: "{{ url('page/surat/get_edit') }}/" + suratID,
-            success: function(response) {
-                // Ubah tampilan modal seperti yang Anda butuhkan
-                // ...
+// Update notifikasi menjadi 'YA' ketika tombol view diklik
+$(document).on('click', '.view', function() {
+    var suratID = $(this).attr('more_id');
+    $.ajax({
+        type: "GET",
+        url: "{{ url('page/surat/get_edit') }}/" + suratID,
+        success: function(response) {
+            // Ubah tampilan modal seperti yang Anda butuhkan
+            // ...
 
-                // Ubah status notifikasi menjadi 'YA'
+            // Ubah status notifikasi menjadi 'YA' hanya jika pengguna adalah penerima disposisi
+            if (response.disposisi == '{{ Auth::user()->id }}') {
                 $.ajax({
                     type: "GET",
                     url: "{{ route('update_notif_surat', ':id') }}".replace(':id', suratID),
@@ -221,13 +223,13 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                         console.log("Error updating notification:", response);
                     }
                 });
-            },
-            error: function(response) {
-                console.log("Error:", response);
             }
-        });
+        },
+        error: function(response) {
+            console.log("Error:", response);
+        }
     });
-}
+});
    $(document).ready(function() {
       setInterval(function(){
         read()

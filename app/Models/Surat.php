@@ -95,24 +95,25 @@ public static function getGalerySurat($type)
 		return $data;
 	}
     public static function getNotifSurat()
-{
-    $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
-        ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
-        ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
-        ->select(
-            \DB::RAW('surat.ringkasan as ringkasan'),
-            \DB::RAW('surat.pengirim as pengirim'),
-            \DB::RAW('surat.created_at as created_at')
-        )
-        ->where('surat.tipe_surat', 'Masuk')
-        ->where('surat.disposisi', '!=', NULL)
-        ->where('surat.disposisi', Auth::user()->id)
-        ->where('surat.notifikasi', '!=', 'YA') // Hanya ambil notifikasi yang belum dilihat
-        ->orderBy('surat.created_at', 'desc')
-        ->get();
-
-    return $data;
-}
+    {
+        $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')
+            ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
+            ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
+            ->select(
+                \DB::RAW('surat.ringkasan as ringkasan'),
+                \DB::RAW('surat.pengirim as pengirim'),
+                \DB::RAW('surat.created_at as created_at')
+            )
+            ->where('surat.tipe_surat', 'Masuk')
+            ->where('surat.disposisi', '!=', NULL)
+            ->where('surat.disposisi', Auth::user()->id)
+            ->where('surat.notifikasi', '!=', 'YA') // Hanya ambil notifikasi yang belum dilihat
+            ->orderBy('surat.created_at', 'desc')
+            ->get();
+    
+        return $data;
+    }
+    
 
     
 
