@@ -221,21 +221,20 @@ public function editDisposisi(Request $request, $id_surat)
 		}
 		return view($view,compact('data','tipe_surat','type'));
 	}
-	public function export_buku_agenda(Request $request, $type)
-	{
-		$data = Surat::getBukuAgendaSurat($request, $type);
-		if ($request->keyword == 'PDF' AND $type == 'masuk') {
-			$pdf=PDF::loadview('page.buku_agenda.surat_masuk.export',compact('data'))->setPaper('A4','landscape');
-			return $pdf->stream();
-		}elseif ($request->keyword == 'Excel' AND $type == 'masuk') {
-			return view('page.buku_agenda.surat_masuk.export',compact('data'));
-		}elseif ($request->keyword == 'PDF' AND $type == 'keluar') {
-			$pdf=PDF::loadview('page.buku_agenda.surat_keluar.export',compact('data'))->setPaper('A4','landscape');
-			return $pdf->stream();
-		}else{
-			return view('page.buku_agenda.surat_keluar.export',compact('data'));
-		}
-	}
+    public function export_buku_agenda(Request $request, $type)
+    {
+        $data = Surat::getBukuAgendaSurat($request, $type);
+    
+        if ($request->keyword == 'PDF' && $type == 'masuk') {
+            $pdf = PDF::loadview('page.buku_agenda.surat_masuk.export', compact('data'))->setPaper('A4', 'landscape');
+            return $pdf->stream();
+        } elseif ($request->keyword == 'PDF' && $type == 'keluar') {
+            $pdf = PDF::loadview('page.buku_agenda.surat_keluar.export', compact('data'))->setPaper('A4', 'landscape');
+            return $pdf->stream();
+        } else {
+            return view('page.buku_agenda.surat_keluar.export', compact('data'));
+        }
+    }    
 	public function get_notif_surat()
 	{
 		$data = Surat::getNotifSurat();
