@@ -49,7 +49,7 @@
                             <th>Tanggal Terima</th>
                             <th>Tanggal Surat</th>
                             <th>Disposisi</th>
-                            <th>Ringkasan</th> 
+                            <th>Keterangan</th> 
                             <th>Action</th>
                         </tr>                        
                     </thead>

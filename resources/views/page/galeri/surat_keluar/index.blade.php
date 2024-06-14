@@ -30,6 +30,7 @@
                             <th>No. </th>
                             <th>Nomor Surat</th>
                             <th>Pengirim</th>
+                            <th>Keterangan</th>
                             <th>Tanggal Surat</th>
                             <th>Action</th>
                         </tr>
@@ -40,6 +41,7 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$dt->nomor_surat}}</td>
                             <td>{{$dt->pengirim}}</td>
+                            <td>{{$dt->ringkasan}}</td>
                             <td>{{$dt->tanggal_surat}}</td>
                             <td>
                                 <a href="javascript:void(0)" more_id="{{$dt->id_surat}}" class="btn view btn-secondary text-white rounded-pill btn-sm"><i class="fa fa-eye"></i></a>

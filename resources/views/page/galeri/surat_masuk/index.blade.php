@@ -63,6 +63,7 @@
                             <th>Nomor Surat</th>
                             <th>Pengirim</th>
                             <th>Disposisi</th>
+                            <th>Keterangan</th>
                             <th>Tanggal Surat</th>
                             <th>Tanggal Terima</th>
                             <th>Action</th>
@@ -75,6 +76,7 @@
                             <td>{{$dt->nomor_surat}}</td>
                             <td>{{$dt->pengirim}}</td>
                             <td class="disposisi_name">{{$dt->disposisi_name}}</td>
+                            <td>{{$dt->ringkasan}}</td>
                             <td>{{$dt->tanggal_surat}}</td>
                             <td>{{$dt->tanggal_terima}}</td>
                             <td>

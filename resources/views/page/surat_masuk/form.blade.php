@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-sm-12 col-12 col-md-12 col-lg-12">
                         <div class="mb-3">
-                            <label for="ringkasan" class="form-label">Ringkasan <span class="text-danger">*</span></label>
+                            <label for="ringkasan" class="form-label">Keterangan <span class="text-danger">*</span></label>
                             <textarea class="form-control ringkasan" required="" id="ringkasan" name="ringkasan" rows="3"></textarea>
                             <span class="error invalid-feedback"></span>
                         </div>

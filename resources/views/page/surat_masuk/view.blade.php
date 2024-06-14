@@ -31,7 +31,7 @@
                <div class="col-8 tanggal_terima"></div>
              </div>
              <div class="row">
-               <div class="col-3">Ringkasan</div>
+               <div class="col-3">Keterangan</div>
                <div class="col-1">:</div>
                <div class="col-8 ringkasan"></div>
              </div>

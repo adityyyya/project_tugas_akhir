@@ -47,7 +47,7 @@
                             <th>Penerima</th>
                             <th>Tanggal Dikirim</th>
                             <th>Tanggal Surat</th>
-                            <th>Ringkasan</th>
+                            <th>Keterangan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
