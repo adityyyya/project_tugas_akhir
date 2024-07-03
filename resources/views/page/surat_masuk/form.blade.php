@@ -51,7 +51,7 @@
                             <div class="input-group">
                                 <select class="form-control select2 disposisi" style="width: 100%;" name="disposisi" id="disposisi">
                                     @foreach($anggota as $agt)
-                                    <option value="{{$agt->id}}">{{$agt->name}} ({{$agt->level}})</option>
+                                    <option value="{{$agt->id}}"> {{$agt->level}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -60,7 +60,7 @@
                     </div>           
                     <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                         <div>
-                            <label for="id_klasifikasi" class="form-label">Keterangan <span class="text-danger">*</span></label>
+                            <label for="id_klasifikasi" class="form-label">Klasifikasi <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <select class="form-control select2 id_klasifikasi" required="" style="width: 100%;" name="id_klasifikasi" id="id_klasifikasi">
                                     @foreach($klasifikasi as $kls)

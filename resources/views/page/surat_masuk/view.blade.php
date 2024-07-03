@@ -41,7 +41,7 @@
                <div class="col-8" id="disposisi_view"></div>
              </div>
              <div class="row">
-               <div class="col-3">Keterangan</div>
+               <div class="col-3">Klasifikasi</div>
                <div class="col-1">:</div>
                <div class="col-8" id="id_klasifikasi_view"></div>
              </div>

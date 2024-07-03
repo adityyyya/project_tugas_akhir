@@ -13,12 +13,13 @@ class Surat extends Model
 	protected $table="surat";
 	protected $primaryKey="id_surat";
 
-	public static function getAnggota()
-	{
-		$data = User::where('users.level','!=','Admin')
-		->get();
-		return $data;
-	}
+    public static function getAnggota()
+    {
+        // Mengambil semua pengguna yang bukan Admin dan bukan Petugas
+        $data = User::whereNotIn('users.level', ['Admin', 'petugas'])->get();
+        return $data;
+    }
+
     public static function getDataSurat($request, $type)
     {
         $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')

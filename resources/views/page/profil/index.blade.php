@@ -70,9 +70,16 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Password <span class="text-danger" id="password_label"></span></label>
-                                        <input type="password" autocomplete="off" class="form-control" name="password" id="password">
+                                        <div class="input-group">
+                                            <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="togglePassword">
+                                                    <i class="fas fa-eye"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="hidden" value="{{ $dt->foto }}" id="fotoLama" name="fotoLama">
@@ -187,5 +194,20 @@ $('#hapusFotoBtn').click(function() {
             });
         });
     });
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+    const passwordInput = document.getElementById('exampleInputPassword');
+    const icon = this.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+
 </script>
 @endsection

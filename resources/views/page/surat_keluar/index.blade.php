@@ -187,7 +187,7 @@
   $("#lampiran").on('change', function() {
     if (this.files && this.files[0]) {
         var file = this.files[0];
-        var allowedExtensions = ['pdf'];
+        var allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'excel'];
         var fileExtension = file.name.split('.').pop().toLowerCase();
 
         if (!allowedExtensions.includes(fileExtension)) {

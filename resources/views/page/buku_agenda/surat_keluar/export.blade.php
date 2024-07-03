@@ -57,7 +57,7 @@
       <span>KECAMATAN BANJARMASIN UTARA</span><br>
       <span>KELURAHAN ALALAK TENGAH</span>
   </div>
-  <small style="text-align: center; display: block; font-size: 15px">Laporan Surat Masuk | Periode Tanggal Surat : 
+  <small style="text-align: center; display: block; font-size: 15px">Laporan Surat Keluar | Periode Tanggal Surat : 
     {{ request()->has('awal') ? request()->input('awal') : date('Y-m-d') }} 
     {{ request()->has('akhir') ? request()->input('akhir') : date('Y-m-d') }} ({{ date('d F Y') }})
 </small>
@@ -75,8 +75,8 @@
       <th style="font-size: 12px;">Penerima</th>
       <th style="font-size: 12px; width:100px;">Tanggal Surat</th>
       <th style="font-size: 12px; width:100px;">Tanggal Terima</th>
+      <th style="font-size: 12px;">Klasifikasi</th>
       <th style="font-size: 12px;">Keterangan</th>
-      <th style="font-size: 12px;">Ringkasan</th>
    </tr>
  </thead>
  <tbody>

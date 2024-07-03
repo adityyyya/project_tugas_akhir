@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-sm-12 col-12 col-md-6 col-lg-6">
                         <div>
-                            <label for="id_klasifikasi" class="form-label">Keterangan <span class="text-danger">*</span></label>
+                            <label for="id_klasifikasi" class="form-label">Klasifikasi <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <select class="form-control select2 id_klasifikasi" required="" style="width: 100%;" name="id_klasifikasi" id="id_klasifikasi">
                                     @foreach($klasifikasi as $kls)

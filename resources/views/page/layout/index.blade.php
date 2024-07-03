@@ -185,7 +185,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             for (let x = 0; response.length > x; x++) {
                 if (response[x].notifikasi !== 'YA') {
                     countNotif++;
-                    if (countNotif <= 3) {
+                    if (countNotif <= 99) {
                         html += "<a class='dropdown-item d-flex align-items-center' href='#'><div class='dropdown-list-image mr-3'><img class='rounded-circle' src='{{ asset('img/undraw_profile_1.svg') }}' alt='...''><div class='status-indicator bg-success'></div></div><div class='font-weight-bold'><div class='text-truncate'>";
                         html += 'Pengirim: ' + response[x].pengirim;
                         html += "</div><div class='small text-gray-500'>" + response[x].ringkasan + " · " + waktuYangLalu(response[x].created_at) + "</div></div></a>";

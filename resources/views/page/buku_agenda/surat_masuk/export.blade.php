@@ -75,8 +75,9 @@
      <th style="font-size: 12px;">Pengirim</th>
      <th style="font-size: 12px; width:100px;">Tanggal Surat</th>
      <th style="font-size: 12px; width:100px;">Tanggal Terima</th>
+     <th style="font-size: 12px;">Klasifikasi</th>
+     <th style="font-size: 12px;">Disposisi</th>
      <th style="font-size: 12px;">Keterangan</th>
-     <th style="font-size: 12px;">Ringkasan</th>
    </tr>
  </thead>
  <tbody>
@@ -88,6 +89,7 @@
     <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_surat}}</td>
     <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_terima}}</td>
     <td style="font-size: 12px; text-align: center;">{{$dt->nama_klasifikasi}}</td>
+    <td style="font-size: 12px; text-align: center;">{{$dt->name}}</td>
     <td style="font-size: 12px;">{{$dt->ringkasan}}</td>
 </tr>
   @endforeach

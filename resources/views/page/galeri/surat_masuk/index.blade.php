@@ -22,7 +22,7 @@
                         <label for="disposisi">Disposisi</label>
                         <select class="form-control select2" id="disposisi" name="disposisi">
                             @foreach($anggota as $agt)
-                                <option value="{{$agt->id}}">{{$agt->name}} ({{$agt->level}})</option>
+                                <option value="{{$agt->id}}">{{$agt->level}}</option>
                             @endforeach
                         </select>
                     </div>           

@@ -71,15 +71,19 @@
                           </div>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            </div>
-                            <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" 
-                            placeholder="Password" required>
-                        </div>
-                    </div> 
+                      <label for="password">Password</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                          </div>
+                          <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                          <div class="input-group-append">
+                              <span class="input-group-text" id="togglePassword">
+                                  <i class="fas fa-eye"></i>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
                     <div class="form-group">
                         <span id="error-msg" style="color: red;"></span>
                     </div>
@@ -108,7 +112,7 @@
 
   <!-- Core plugin JavaScript-->
   <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
   <script>
@@ -145,6 +149,22 @@
       });
   });
 </script>
-</body>
+<script>
+  document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('exampleInputPassword');
+      const icon = this.querySelector('i');
 
+      // Toggle password visibility
+      if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+      } else {
+          passwordInput.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+      }
+  });
+</script>
+</body>
 </html>
