@@ -80,21 +80,23 @@ public static function getGalerySurat($type)
 }
 
 		
-	public static function getBukuAgendaSurat($request, $type)
-	{
-		$data = Surat::leftJoin('users as disposisi','disposisi.id','=','surat.disposisi')
-		->leftJoin('klasifikasi_surat','klasifikasi_surat.id_klasifikasi','=','surat.id_klasifikasi')
-		->leftJoin('status_surat','status_surat.id_status','=','surat.id_status')
-		->where('surat.tipe_surat',$type);
-		if (!empty($request->awal)) {
-			$data->whereBetween('surat.tanggal_terima',[$request->awal,$request->akhir]);
-		}
-		// if (Auth::user()->level != 'Admin') {
-		// 	$data->where('surat_detail.disposisi',Auth::user()->id);
-		// }
-		$data = $data->get();
-		return $data;
-	}
+public static function getBukuAgendaSurat($request, $type)
+{
+    $data = Surat::leftJoin('users as disposisi_user', 'disposisi_user.id', '=', 'surat.disposisi')
+        ->leftJoin('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
+        ->leftJoin('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
+        ->where('surat.tipe_surat', $type);
+
+    if (!empty($request->awal)) {
+        $data->whereBetween('surat.tanggal_terima', [$request->awal, $request->akhir]);
+    }
+
+    $data = $data->select('surat.*', 'disposisi_user.name as disposisi_name', 'klasifikasi_surat.nama_klasifikasi', 'status_surat.nama_status')
+        ->get();
+
+    return $data;
+}
+
     public static function getNotifSurat()
     {
         $data = Surat::leftJoin('users as disposisi', 'disposisi.id', '=', 'surat.disposisi')

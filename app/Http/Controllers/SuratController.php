@@ -211,35 +211,107 @@ public function editDisposisi(Request $request, $id_surat)
         ]);
     }
 }   
-	public function buku_agenda(Request $request, $type)
-	{
-		if ($type == 'masuk') {
-			$tipe_surat = 'Masuk';
-		}else{
-			$tipe_surat = 'Keluar';
-		}
-		$data = Surat::getBukuAgendaSurat($request, $type);
-		if ($type == 'masuk') {
-			$view = 'page.buku_agenda.surat_masuk.index';
-		}else{
-			$view = 'page.buku_agenda.surat_keluar.index';
-		}
-		return view($view,compact('data','tipe_surat','type'));
-	}
-    public function export_buku_agenda(Request $request, $type)
-    {
-        $data = Surat::getBukuAgendaSurat($request, $type);
-    
-        if ($request->keyword == 'PDF' && $type == 'masuk') {
+public function buku_agenda(Request $request, $type)
+{
+    if ($type == 'masuk') {
+        $tipe_surat = 'Masuk';
+    }else{
+        $tipe_surat = 'Keluar';
+    }
+    $data = Surat::getBukuAgendaSurat($request, $type);
+
+        $klasifikasi = KlasifikasiSurat::all();
+        $status = StatusSurat::all();
+        $tipe_surat = 'Semua'; // Default value
+
+    if ($type == 'masuk') {
+        $view = 'page.buku_agenda.surat_masuk.index';
+    } else {
+        $view = 'page.buku_agenda.surat_keluar.index';
+    }
+
+    return view($view, compact('data', 'tipe_surat', 'type', 'klasifikasi', 'status'));
+}
+public function export_buku_agenda(Request $request, $type)
+{
+    // Memastikan hanya tipe surat yang valid yang bisa diolah
+    if ($type != 'masuk' && $type != 'keluar') {
+        return redirect()->back()->with('error', 'Tipe surat tidak valid.');
+    }
+
+    // Memanggil fungsi untuk mendapatkan data buku agenda surat berdasarkan request dan tipe surat
+    $data = Surat::getBukuAgendaSurat($request, $type);
+
+    // Memproses output berdasarkan permintaan format PDF atau tampilan HTML
+    if ($request->keyword == 'PDF') {
+        if ($type == 'masuk') {
             $pdf = PDF::loadview('page.buku_agenda.surat_masuk.export', compact('data'))->setPaper('A4', 'landscape');
             return $pdf->stream();
-        } elseif ($request->keyword == 'PDF' && $type == 'keluar') {
+        } elseif ($type == 'keluar') {
             $pdf = PDF::loadview('page.buku_agenda.surat_keluar.export', compact('data'))->setPaper('A4', 'landscape');
             return $pdf->stream();
-        } else {
+        }
+    } else {
+        // Jika bukan permintaan PDF, tampilkan tampilan HTML sesuai dengan tipe surat
+        if ($type == 'masuk') {
+            return view('page.buku_agenda.surat_masuk.export', compact('data'));
+        } elseif ($type == 'keluar') {
             return view('page.buku_agenda.surat_keluar.export', compact('data'));
         }
-    }    
+    }
+}
+
+public function filterStatus(Request $request)
+{
+    $klasifikasiId = $request->input('klasifikasi_id');
+    $statusId = $request->input('status_id');
+
+    // Log request parameters for debugging
+    \Log::info('Klasifikasi ID: ' . $klasifikasiId);
+    \Log::info('Status ID: ' . $statusId);
+
+    // Ambil tipe surat dari request jika tersedia
+    $type = $request->input('type');
+
+    $query = Surat::query();
+
+    // Tambahkan kondisi tipe surat (masuk atau keluar)
+    if ($type == 'masuk') {
+        $query->where('surat.tipe_surat', 'masuk');
+    } elseif ($type == 'keluar') {
+        $query->where('surat.tipe_surat', 'keluar');
+    } else {
+        // Jika tipe surat tidak valid, kembalikan response kosong atau pesan error sesuai kebutuhan
+        return response()->json(['agenda' => []]);
+    }
+
+    if ($klasifikasiId) {
+        $query->where('surat.id_klasifikasi', $klasifikasiId);
+    }
+
+    if ($statusId) {
+        $query->where('surat.id_status', $statusId);
+    }
+
+    // Inner join dengan tabel klasifikasi_surat dan status_surat untuk mendapatkan nama klasifikasi dan status
+    $query->join('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi', '=', 'surat.id_klasifikasi')
+          ->join('status_surat', 'status_surat.id_status', '=', 'surat.id_status')
+          ->leftJoin('users', 'users.id', '=', 'surat.disposisi')
+          ->select('surat.*', 'klasifikasi_surat.nama_klasifikasi', 'status_surat.nama_status', 'users.name as disposisi_name');
+
+    // Jika ingin mendapatkan data yang unik berdasarkan ID surat, tambahkan distinct
+    $data = $query->distinct()->get();
+
+    // Log the resulting data for debugging
+    \Log::info($data);
+
+    // Tentukan view berdasarkan tipe surat
+    return response()->json(['agenda' => $data]);
+}
+
+
+
+
 	public function get_notif_surat()
 	{
 		$data = Surat::getNotifSurat();

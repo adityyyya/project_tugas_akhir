@@ -58,6 +58,8 @@ Route::middleware(['auth'])->prefix('page')->group(function() {
 	// buku agenda
 	Route::get('buku_agenda/surat_{type}', [SuratController::class, 'buku_agenda'])->name('buku_agenda');
 	Route::get('buku_agenda/surat_{type}/export', [SuratController::class, 'export_buku_agenda'])->name('export_buku_agenda');
+    Route::get('/filter-status', [SuratController::class, 'filterStatus'])->name('filter.status');
+
 	// get notifikasi
 	Route::get('get_notif_surat', [SuratController::class, 'get_notif_surat'])->name('get_notif_surat');
 	Route::get('update_notif_surat/{id}', [SuratController::class, 'updateNotif'])->name('update_notif_surat');
