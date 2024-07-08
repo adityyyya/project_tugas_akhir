@@ -60,7 +60,7 @@
                         <tr>
                             <th>No. </th>
                             <th>Nomor Surat</th>
-                            <th>Pengirim</th>
+                            <th>Penerima</th>
                             <th>Tanggal Surat</th>
                             <th>Tanggal Dikirim</th>
                             <th>Klasifikasi Surat</th>

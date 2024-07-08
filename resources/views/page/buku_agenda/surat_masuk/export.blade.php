@@ -89,7 +89,7 @@
     <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_surat}}</td>
     <td style="font-size: 12px;  text-align: center;">{{$dt->tanggal_terima}}</td>
     <td style="font-size: 12px; text-align: center;">{{$dt->nama_klasifikasi}}</td>
-    <td style="font-size: 12px; text-align: center;">{{$dt->name}}</td>
+    <td style="font-size: 12px; text-align: center;">{{$dt->disposisi_name}}</td>
     <td style="font-size: 12px;">{{$dt->ringkasan}}</td>
 </tr>
   @endforeach
